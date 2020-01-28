@@ -53,7 +53,7 @@ import {
 
 import Header from "components/Headers/Header.jsx";
 
-class Index extends React.Component {
+class Patient extends React.Component {
   state = {
     activeNav: 1,
     chartExample1Data: "data1"
@@ -181,4 +181,4 @@ class Index extends React.Component {
   }
 }
 
-export default Index;
+export default Patient;

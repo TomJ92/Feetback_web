@@ -22,6 +22,7 @@ import Register from "views/examples/Register.jsx";
 import Login from "views/examples/Login.jsx";
 import Tables from "views/examples/Tables.jsx";
 import Icons from "views/examples/Icons.jsx";
+import Patient from "views/examples/Patient.jsx";
 
 var routes = [
   {
@@ -72,6 +73,13 @@ var routes = [
     icon: "ni ni-circle-08 text-pink",
     component: Register,
     layout: "/auth"
+  },
+  {
+    path: "/patient",
+    name: "Patient's record",
+    icon: "ni ni-tv-2 text-primary",
+    component: Patient,
+    layout: "/admin"
   }
 ];
 export default routes;
