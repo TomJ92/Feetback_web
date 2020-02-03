@@ -52,6 +52,7 @@ import {
 } from "variables/charts.jsx";
 
 import Header from "components/Headers/Header.jsx";
+import TabWidget from"components/TabWidget/TabWidget.js";
 
 class Index extends React.Component {
   state = {
@@ -85,94 +86,7 @@ class Index extends React.Component {
     <Container className="mt--7" fluid>
     <Row className="mt-5">
     <Col className="mb-5 mb-xl-0" xl="12">
-    <Card className="shadow">
-    <CardHeader className="border-0">
-    <Row className="align-items-center">
-    <div className="col">
-    <h3 className="mb-0">List of patients</h3>
-    <Form className="mt-4 mb-5 mb-xl-0 d-md-none">
-    <InputGroup className="input-group-rounded input-group-merge">
-    <Input
-    aria-label="Search"
-    className="form-control-rounded form-control-prepended"
-    placeholder="Search a patient"
-    type="search"
-    />
-    <InputGroupAddon addonType="prepend">
-    <InputGroupText>
-    <span className="fa fa-search" />
-    </InputGroupText>
-    </InputGroupAddon>
-    </InputGroup>
-    </Form>
-    </div>
-    </Row>
-    </CardHeader>
-    <Table className="align-items-center table-flush" responsive>
-    <thead className="thead-light">
-    <tr>
-    <th scope="col">Full Name</th>
-    <th scope="col">E-mail</th>
-    <th scope="col">Last meeting date</th>
-    <th scope="col">Anomaly</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-    <th scope="row">Paul CHASSELOUP</th>
-    <td>paul.chasseloup@edu.ece.com</td>
-    <td>11/04/2019</td>
-    <td><div class="alert alert-danger" role="alert">
-    <strong>Anomaly detected !</strong></div></td>
-    </tr>
-
-    <tr>
-    <th scope="row">Tom JOUVET</th>
-    <td>tom.jouvet@edu.ece.fr</td>
-    <td>03/07/2018</td>
-    <td><div class="alert alert-success" role="alert">
-    <strong>Nothing to report !</strong>
-    </div></td>
-    </tr>
-
-    <tr>
-    <th scope="row">Valentine RICOUT</th>
-    <td>valentine.ricout@edu.ece.fr</td>
-    <td>03/07/2017</td>
-    <td><div class="alert alert-success" role="alert">
-    <strong>Nothing to report !</strong>
-    </div></td>
-    </tr>
-
-    <tr>
-    <th scope="row">William TERRIEN</th>
-    <td>william.terrien@edu.ece.fr</td>
-    <td>02/11/2019</td>
-    <td><div class="alert alert-success" role="alert">
-    <strong>Nothing to report !</strong>
-    </div></td>
-    </tr>
-
-    <tr>
-    <th scope="row">Emma PALFI</th>
-    <td>emma.palfi@edu.ece.fr</td>
-    <td>07/10/2015</td>
-    <td><div class="alert alert-success" role="alert">
-    <strong>Nothing to report !</strong>
-    </div></td>
-    </tr>
-
-    <tr>
-    <th scope="row">Baptiste CAUVIN</th>
-    <td>baptiste.cauvin@edu.ece.fr</td>
-    <td>03/12/2019</td>
-    <td><div class="alert alert-success" role="alert">
-    <strong>Nothing to report !</strong>
-    </div></td>
-    </tr>
-    </tbody>
-    </Table>
-    </Card>
+    <TabWidget></TabWidget>
     </Col>
     </Row>
     </Container>
