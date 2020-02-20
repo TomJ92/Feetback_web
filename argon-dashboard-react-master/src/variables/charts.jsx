@@ -302,20 +302,20 @@ function parseOptions(parent, options) {
   }
 }
 
-// Example 1 of Chart inside src/views/Index.jsx (Sales value - Card)
+// Example 1 of Chart inside src/views/Index.jsx (Pressure value - Card)
 let chartExample1 = {
   options: {
     scales: {
       yAxes: [
         {
           gridLines: {
-            color: colors.gray[900],
-            zeroLineColor: colors.gray[900]
+            color: colors.gray[100],
+            zeroLineColor: colors.gray[100]
           },
           ticks: {
             callback: function(value) {
               if (!(value % 10)) {
-                return "$" + value + "k";
+                return value + " Pa";
               }
             }
           }
@@ -333,7 +333,7 @@ let chartExample1 = {
             content += label;
           }
 
-          content += "$" + yLabel + "k";
+          content += yLabel + " Pa";
           return content;
         }
       }
@@ -345,7 +345,7 @@ let chartExample1 = {
       datasets: [
         {
           label: "Performance",
-          data: [0, 20, 10, 30, 15, 40, 20, 60, 60]
+          data: [0, 20, 10, 30, 15, 40, 20, 60]
         }
       ]
     };

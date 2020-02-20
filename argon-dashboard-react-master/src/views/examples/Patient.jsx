@@ -52,6 +52,7 @@ import {
 } from "variables/charts.jsx";
 
 import Header from "components/Headers/Header.jsx";
+import Graph from "components/Graph/Graph.js";
 
 class Patient extends React.Component {
   state = {
@@ -86,7 +87,9 @@ class Patient extends React.Component {
     <Row className="mt-5">
     <Col className="mb-5 mb-xl-0" xl="6">
               <Card className="bg-gradient-default shadow">
+
                 <CardHeader className="bg-transparent">
+
                   <Row className="align-items-center">
                     <div className="col">
                       <h6 className="text-uppercase text-light ls-1 mb-1">
@@ -97,123 +100,112 @@ class Patient extends React.Component {
                     <div className="col">
                     </div>
                   </Row>
+
                 </CardHeader>
+
                 <CardBody>
                   {/* Chart */}
-                  <div className="chart">
-                    <Line
-                      data={chartExample1[this.state.chartExample1Data]}
-                      options={chartExample1.options}
-                      getDatasetAtEvent={e => console.log(e)}
-                    />
-                  </div>
+                  
+                  <Graph></Graph>
+
                 </CardBody>
+
               </Card>
+
             </Col>
+
             <Col className="mb-5 mb-xl-0" xl="6">
               <Card className="bg-gradient-default shadow">
                 <CardHeader className="bg-transparent">
                   <Row className="align-items-center">
                     <div className="col">
                       <h6 className="text-uppercase text-light ls-1 mb-1">
-                        Sensor 1
+                        Sensor 2
                       </h6>
                       <h2 className="text-white mb-0">Pressure values</h2>
                     </div>
-                    <div className="col">
-                    </div>
+                    
                   </Row>
                 </CardHeader>
                 <CardBody>
                   {/* Chart */}
-                  <div className="chart">
-                    <Line
-                      data={chartExample1[this.state.chartExample1Data]}
-                      options={chartExample1.options}
-                      getDatasetAtEvent={e => console.log(e)}
-                    />
-                  </div>
+                  
+                  <Graph></Graph>
+
                 </CardBody>
               </Card>
             </Col>
+
+            <Col className="mb-5 mb-xl-0" xl="6">
+              <Card className="bg-gradient-default shadow">
+                <CardHeader className="bg-transparent">
+                  <Row className="align-items-center">
+
+                    <div className="col">
+                      <h6 className="text-uppercase text-light ls-1 mb-1">
+                        Sensor 3
+                      </h6>
+                      <h2 className="text-white mb-0">Pressure values</h2>
+                    </div>
+
+                  </Row>
+
+                </CardHeader>
+
+                <CardBody>
+                  {/* Chart */}
+
+                  <Graph></Graph>
+
+                </CardBody>
+
+              </Card>
+            </Col>  
+
+
             <Col className="mb-5 mb-xl-0" xl="6">
               <Card className="bg-gradient-default shadow">
                 <CardHeader className="bg-transparent">
                   <Row className="align-items-center">
                     <div className="col">
                       <h6 className="text-uppercase text-light ls-1 mb-1">
-                        Sensor 1
+                        Sensor 4
                       </h6>
                       <h2 className="text-white mb-0">Pressure values</h2>
-                    </div>
-                    <div className="col">
-                    </div>
+                    </div>                    
                   </Row>
                 </CardHeader>
                 <CardBody>
                   {/* Chart */}
-                  <div className="chart">
-                    <Line
-                      data={chartExample1[this.state.chartExample1Data]}
-                      options={chartExample1.options}
-                      getDatasetAtEvent={e => console.log(e)}
-                    />
-                  </div>
+
+                  <Graph></Graph>
+
                 </CardBody>
               </Card>
             </Col>
+
+
             <Col className="mb-5 mb-xl-0" xl="6">
               <Card className="bg-gradient-default shadow">
                 <CardHeader className="bg-transparent">
                   <Row className="align-items-center">
                     <div className="col">
                       <h6 className="text-uppercase text-light ls-1 mb-1">
-                        Sensor 1
+                        Sensor 5
                       </h6>
                       <h2 className="text-white mb-0">Pressure values</h2>
-                    </div>
-                    <div className="col">
                     </div>
                   </Row>
                 </CardHeader>
                 <CardBody>
                   {/* Chart */}
-                  <div className="chart">
-                    <Line
-                      data={chartExample1[this.state.chartExample1Data]}
-                      options={chartExample1.options}
-                      getDatasetAtEvent={e => console.log(e)}
-                    />
-                  </div>
+
+                  <Graph></Graph>
+
                 </CardBody>
               </Card>
             </Col>
-            <Col className="mb-5 mb-xl-0" xl="6">
-              <Card className="bg-gradient-default shadow">
-                <CardHeader className="bg-transparent">
-                  <Row className="align-items-center">
-                    <div className="col">
-                      <h6 className="text-uppercase text-light ls-1 mb-1">
-                        Sensor 1
-                      </h6>
-                      <h2 className="text-white mb-0">Pressure values</h2>
-                    </div>
-                    <div className="col">
-                    </div>
-                  </Row>
-                </CardHeader>
-                <CardBody>
-                  {/* Chart */}
-                  <div className="chart">
-                    <Line
-                      data={chartExample1[this.state.chartExample1Data]}
-                      options={chartExample1.options}
-                      getDatasetAtEvent={e => console.log(e)}
-                    />
-                  </div>
-                </CardBody>
-              </Card>
-            </Col>
+
     <Col className="mb-5 mb-xl-0" xl="12">
     <Card className="shadow">
     <CardHeader className="border-0">
