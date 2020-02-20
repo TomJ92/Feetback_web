@@ -106,7 +106,7 @@ class Patient extends React.Component {
                 <CardBody>
                   {/* Chart */}
                   
-                  <Graph></Graph>
+                  <Graph sensorNumber={0} ></Graph>
 
                 </CardBody>
 
@@ -130,7 +130,7 @@ class Patient extends React.Component {
                 <CardBody>
                   {/* Chart */}
                   
-                  <Graph></Graph>
+                  <Graph sensorNumber={1} ></Graph>
 
                 </CardBody>
               </Card>
@@ -155,7 +155,7 @@ class Patient extends React.Component {
                 <CardBody>
                   {/* Chart */}
 
-                  <Graph></Graph>
+                  <Graph sensorNumber={2} ></Graph>
 
                 </CardBody>
 
@@ -178,7 +178,7 @@ class Patient extends React.Component {
                 <CardBody>
                   {/* Chart */}
 
-                  <Graph></Graph>
+                  <Graph sensorNumber={3} ></Graph>
 
                 </CardBody>
               </Card>
@@ -200,7 +200,7 @@ class Patient extends React.Component {
                 <CardBody>
                   {/* Chart */}
 
-                  <Graph></Graph>
+                  <Graph sensorNumber={4} ></Graph>
 
                 </CardBody>
               </Card>

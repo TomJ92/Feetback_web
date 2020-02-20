@@ -1,49 +1,76 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent } from "react";
+import { useState } from 'react';
+import { useQuery } from "@apollo/react-hooks";
+import { gql } from "apollo-boost";
 import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
-} from 'recharts';
-
-//proviens du site http://recharts.org/en-US/examples
-const data = [
-  {
-    name: 'May', TempMatin: 5,
-  },
-  {
-    name: 'Jun', TempMatin: 6,
-  },
-  {
-    name: 'Jul', TempMatin: 7,
-  },
-  {
-    name: 'Aug', TempMatin: 6,
-  },
-];
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer
+} from "recharts";
 
 
-export default class Widget1 extends PureComponent {
-
-  render() {
-
-    //const personne = this.props.WidgetData;
-
-    return (
-
-        <ResponsiveContainer aspect="2">
-
-              <LineChart
-                data={data}
-                margin={{
-                  top: 0, right: 3, left: -30, bottom: 0,
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line type="monotone" dataKey="TempMatin" stroke="#8884d8" activeDot={{ r: 8 }} />
-              </LineChart>
-        </ResponsiveContainer>
-    );
+const SENSOR_DATA = gql`
+  query {
+    getMeasures(patient: "1") {
+      sensors {
+        averagePressureS
+        maxPressureS
+        minPressureS
+      }
+    }
   }
+`;
+
+function getSensorNData(data, sensorNumber) {
+  var arr = [];
+  if (data!==undefined && sensorNumber!==undefined){
+    data.getMeasures.forEach(read => {
+      arr.push({Pressure: read.sensors[sensorNumber].averagePressureS});
+    });
+}
+  return arr;
+}
+
+export default function Widget1(props) {
+  //const [sensorNumber] = useState(0);
+  const { loading, error, data } = useQuery(SENSOR_DATA);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+  
+  
+  //const personne = this.props.WidgetData;
+  console.log(props.sensorNumber)
+  console.log(getSensorNData(data, props.sensorNumber))
+  let parseData = getSensorNData(data, props.sensorNumber)
+  return (
+    <ResponsiveContainer aspect="2">
+      <LineChart
+        data={parseData}
+        margin={{
+          top: 0,
+          right: 3,
+          left: -30,
+          bottom: 0
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Line
+          type="monotone"
+          dataKey="Pressure"
+          stroke="#8884d8"
+          activeDot={{ r: 8 }}
+        />
+      </LineChart>
+    </ResponsiveContainer>
+  );
 }

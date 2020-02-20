@@ -26,13 +26,27 @@ import "assets/scss/argon-dashboard-react.scss";
 import AdminLayout from "layouts/Admin.jsx";
 import AuthLayout from "layouts/Auth.jsx";
 
-ReactDOM.render(
+import ApolloClient from 'apollo-boost';
+import { render } from 'react-dom';
+
+import { ApolloProvider } from '@apollo/react-hooks';
+
+
+
+const client = new ApolloClient({
+  uri: 'http://localhost:4000/graphql',
+});
+
+const App = () => (
+  <ApolloProvider client={client}>
   <BrowserRouter>
     <Switch>
       <Route path="/admin" render={props => <AdminLayout {...props} />} />
       <Route path="/auth" render={props => <AuthLayout {...props} />} />
       <Redirect from="/" to="/admin/index" />
     </Switch>
-  </BrowserRouter>,
-  document.getElementById("root")
+  </BrowserRouter>
+  </ApolloProvider>
 );
+
+render(<App />, document.getElementById('root'));
