@@ -6,21 +6,21 @@ import {
 //proviens du site http://recharts.org/en-US/examples
 const data = [
   {
-    name: 'May', TempMatin: 5,
+    name: 'May', Pa: 5,
   },
   {
-    name: 'Jun', TempMatin: 6,
+    name: 'Jun', Pa: 6,
   },
   {
-    name: 'Jul', TempMatin: 7,
+    name: 'Jul', Pa: 7,
   },
   {
-    name: 'Aug', TempMatin: 6,
+    name: 'Aug', Pa: 6,
   },
 ];
 
 
-export default class Widget1 extends PureComponent {
+export default class Graph extends PureComponent {
 
   render() {
 
@@ -41,7 +41,7 @@ export default class Widget1 extends PureComponent {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" dataKey="TempMatin" stroke="#8884d8" activeDot={{ r: 8 }} />
+                <Line type="monotone" dataKey="Pa" stroke="#8884d8" activeDot={{ r: 8 }} />
               </LineChart>
         </ResponsiveContainer>
     );
