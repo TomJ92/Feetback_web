@@ -27,15 +27,31 @@ import AdminLayout from "layouts/Admin.jsx";
 import AuthLayout from "layouts/Auth.jsx";
 
 import ApolloClient from 'apollo-boost';
+import { setContext } from 'apollo-link-context';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 import { render } from 'react-dom';
 
 import { ApolloProvider } from '@apollo/react-hooks';
 
 
+const graphQLServerURL = 'http://localhost:4000'
+
+const getToken = () => {
+  const token = localStorage.getItem('token');
+  return token ? `Bearer ${token}` : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjVlNGQ3ZWYzMjVhMjBkNzcxNzFjMmE1YyIsIm5hbWUiOiJNYW51ZWwiLCJsYXN0bmFtZSI6IkdhcmNpYSIsImVtYWlsIjoibWFudWVsQGVkdS5mciIsInBvZGlhdHJpc3QiOnRydWUsImlkIjoxLCJyZWdpc3RlckRhdGUiOiIyMDIwLTAyLTE5IDE5OjMxOjE1In0sImlhdCI6MTU4MjI3OTAyNCwiZXhwIjoxNTgyMzY1NDI0fQ.XkCTTt9UTUZd9FiDCtpZR-C3YTszEPAj0asv1k5JrjQ';
+};
 
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql',
+  uri: graphQLServerURL + "/graphql",
+  request: (operation) => {
+    operation.setContext({
+      headers: {
+        Authorization: getToken(),
+      },
+    });
+  },
 });
+
 
 const App = () => (
   <ApolloProvider client={client}>
