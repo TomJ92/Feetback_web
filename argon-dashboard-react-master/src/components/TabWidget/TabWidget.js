@@ -4,9 +4,12 @@ import classnames from "classnames";
 // javascipt plugin for creating charts
 import Chart from "chart.js";
 // react plugin used to create charts
-import { Line, Bar } from "react-chartjs-2";
 import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
+import { useHistory } from 'react-router-dom';
+
+
+
 // reactstrap components
 import {
   Button,
@@ -29,6 +32,7 @@ import {
 } from "reactstrap";
 
 import Anomaly from "components/Anomaly/Anomaly.js";
+import { Redirect } from "react-router";
 
 const PACIENTS_INFO = gql`
   query {
@@ -50,14 +54,20 @@ const PACIENTS_INFO = gql`
 
 export default function TabWidget() {
   const { loading, error, data } = useQuery(PACIENTS_INFO);
+  const history = useHistory();
 
   if (loading) return <p>Loading...</p>;
   if (error || data.status==false) return <p>Error :(</p>;
 
+
   const { pacients = [] } = {pacients: data.getPacients.pacients};
 
-
+  // const history = useHistory()
+  // const handleButtonClick = (event) => {
+  //   history.push(event.target.value)
+  // }
   return (
+    <>
     <Card className="shadow">
       <CardHeader className="border-0">
         <Row className="align-items-center">
@@ -81,6 +91,7 @@ export default function TabWidget() {
           </div>
         </Row>
       </CardHeader>
+
       <Table className="align-items-center table-flush" responsive>
         <thead className="thead-light">
           <tr>
@@ -94,7 +105,7 @@ export default function TabWidget() {
           {pacients.length ? (
             pacients.map(pacient => (
               <tr>
-                <th scope="row">{pacient.name + " " + pacient.lastname}</th>
+                <th scope="row"><a href="" onClick={() => history.push("/admin/patient", { pacient: pacient.id })}> {pacient.name + " " + pacient.lastname}</a></th>
                 <td>{pacient.email}</td>
                 <td>{pacient.lastMeetingDate ? (pacient.lastMeetingDate) : ("None") }</td>
                 <td>
@@ -113,5 +124,6 @@ export default function TabWidget() {
         </tbody>
       </Table>
     </Card>
+    </>
   );
 }

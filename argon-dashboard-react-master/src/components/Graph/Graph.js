@@ -15,8 +15,8 @@ import {
 
 
 const SENSOR_DATA = gql`
-  query {
-    getMeasures(patient: "1") {
+  query($pacient: String! ) {
+    getMeasures(patient: $pacient) {
       sensors {
         averagePressureS
         maxPressureS
@@ -38,7 +38,10 @@ function getSensorNData(data, sensorNumber) {
 
 export default function Widget1(props) {
   //const [sensorNumber] = useState(0);
-  const { loading, error, data } = useQuery(SENSOR_DATA);
+  const { loading, error, data } = useQuery(SENSOR_DATA, {
+    variables: {
+    pacient: ""+`${props.pacient}`},
+  });
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;

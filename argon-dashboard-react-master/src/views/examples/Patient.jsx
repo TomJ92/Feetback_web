@@ -20,6 +20,8 @@ import React from "react";
 import classnames from "classnames";
 // javascipt plugin for creating charts
 import Chart from "chart.js";
+import { useHistory } from 'react-router-dom';
+
 // react plugin used to create charts
 import { Line, Bar } from "react-chartjs-2";
 // reactstrap components
@@ -54,31 +56,21 @@ import {
 import Header from "components/Headers/Header.jsx";
 import Graph from "components/Graph/Graph.js";
 
-class Patient extends React.Component {
-  state = {
-    activeNav: 1,
-    chartExample1Data: "data1"
-  };
-  toggleNavs = (e, index) => {
-    e.preventDefault();
-    this.setState({
-      activeNav: index,
-      chartExample1Data:
-      this.state.chartExample1Data === "data1" ? "data2" : "data1"
-    });
-    let wow = () => {
-      console.log(this.state);
-    };
-    wow.bind(this);
-    setTimeout(() => wow(), 1000);
-    // this.chartReference.update();
-  };
-  componentWillMount() {
-    if (window.Chart) {
-      parseOptions(Chart, chartOptions());
-    }
-  }
-  render() {
+export default function Patient (props){
+    const history = useHistory();
+    if(props.location.state==null)
+        return(
+        <>
+        <Header />
+        {/* Page content */}
+        <Container className="mt--7" fluid>
+        <Row className="mt-5">
+        <Col className="mb-5 mb-xl-0" xl="6"></Col>
+          <p>Wrong access, return to the pacients list</p> 
+        </Row>
+        </Container>
+        
+        </>);
     return (
       <>
       <Header />
@@ -106,7 +98,7 @@ class Patient extends React.Component {
                 <CardBody>
                   {/* Chart */}
                   
-                  <Graph sensorNumber={0} ></Graph>
+                  <Graph sensorNumber={0} pacient={ props.location.state.pacient} ></Graph>
 
                 </CardBody>
 
@@ -130,7 +122,7 @@ class Patient extends React.Component {
                 <CardBody>
                   {/* Chart */}
                   
-                  <Graph sensorNumber={1} ></Graph>
+                  <Graph sensorNumber={1} pacient={ props.location.state.pacient} ></Graph>
 
                 </CardBody>
               </Card>
@@ -155,7 +147,7 @@ class Patient extends React.Component {
                 <CardBody>
                   {/* Chart */}
 
-                  <Graph sensorNumber={2} ></Graph>
+                  <Graph sensorNumber={2} pacient={ props.location.state.pacient} ></Graph>
 
                 </CardBody>
 
@@ -178,7 +170,7 @@ class Patient extends React.Component {
                 <CardBody>
                   {/* Chart */}
 
-                  <Graph sensorNumber={3} ></Graph>
+                  <Graph sensorNumber={3} pacient={ props.location.state.pacient} ></Graph>
 
                 </CardBody>
               </Card>
@@ -200,7 +192,7 @@ class Patient extends React.Component {
                 <CardBody>
                   {/* Chart */}
 
-                  <Graph sensorNumber={4} ></Graph>
+                  <Graph sensorNumber={4} pacient={ props.location.state.pacient}></Graph>
 
                 </CardBody>
               </Card>
@@ -323,6 +315,4 @@ class Patient extends React.Component {
     </>
     );
   }
-}
 
-export default Patient;
