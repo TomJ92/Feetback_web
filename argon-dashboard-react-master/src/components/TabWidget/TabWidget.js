@@ -99,6 +99,7 @@ export default function TabWidget() {
             <th scope="col">E-mail</th>
             <th scope="col">Last meeting date</th>
             <th scope="col">Anomaly</th>
+            <th scope="col"> </th>
           </tr>
         </thead>
         <tbody>
@@ -110,6 +111,13 @@ export default function TabWidget() {
                 <td>{pacient.lastMeetingDate ? (pacient.lastMeetingDate) : ("None") }</td>
                 <td>
                   <Anomaly val={false}></Anomaly>
+                </td>
+                <td>
+                  <Button
+                  onClick={() => history.push("/admin/patientProfile", { patientId: pacient.id, podiatrist: "1", name: pacient.name, lastname: pacient.lastname, lastMeetingDate: pacient.lastMeetingDate, email: pacient.email})}
+                  >
+                    Go to profile
+                  </Button>
                 </td>
               </tr>
             ))

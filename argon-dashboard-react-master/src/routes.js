@@ -23,6 +23,7 @@ import Login from "views/examples/Login.jsx";
 import Tables from "views/examples/Tables.jsx";
 import Icons from "views/examples/Icons.jsx";
 import Patient from "views/examples/Patient.jsx";
+import PatientProfile from "views/examples/PatientsProfile.jsx"
 
 var routes = [
   {
@@ -79,6 +80,13 @@ var routes = [
     name: "Patient's record",
     icon: "ni ni-tv-2 text-primary",
     component: Patient,
+    layout: "/admin"
+  },
+  {
+    path: "/patientProfile",
+    name: "Patient's profile",
+    icon: "ni ni-tv-2 text-primary",
+    component: PatientProfile,
     layout: "/admin"
   }
 ];

@@ -38,7 +38,7 @@ const graphQLServerURL = 'http://localhost:4000'
 
 const getToken = () => {
   const token = localStorage.getItem('token');
-  return token ? `Bearer ${token}` : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjVlNGQ3ZWYzMjVhMjBkNzcxNzFjMmE1YyIsIm5hbWUiOiJNYW51ZWwiLCJsYXN0bmFtZSI6IkdhcmNpYSIsImVtYWlsIjoibWFudWVsQGVkdS5mciIsInBvZGlhdHJpc3QiOnRydWUsImlkIjoxLCJyZWdpc3RlckRhdGUiOiIyMDIwLTAyLTE5IDE5OjMxOjE1In0sImlhdCI6MTU4MjI3OTAyNCwiZXhwIjoxNTgyMzY1NDI0fQ.XkCTTt9UTUZd9FiDCtpZR-C3YTszEPAj0asv1k5JrjQ';
+  return token ? `Bearer ${token}` : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjVlNGQ3ZWYzMjVhMjBkNzcxNzFjMmE1YyIsIm5hbWUiOiJNYW51ZWwiLCJsYXN0bmFtZSI6IkdhcmNpYSIsImVtYWlsIjoibWFudWVsQGVkdS5mciIsInBvZGlhdHJpc3QiOnRydWUsImlkIjoxLCJyZWdpc3RlckRhdGUiOiIyMDIwLTAyLTE5IDE5OjMxOjE1In0sImlhdCI6MTU4MjQ4NDc5MiwiZXhwIjoxNTgyNTcxMTkyfQ.18XV0YMu7uTHV_70XHP-xCiSLbqF40mw2VezYs5J-NM';
 };
 
 const client = new ApolloClient({
