@@ -41,11 +41,7 @@ export default function UserHeader(props) {
               <Col lg="7" md="10">
         <h1 className="display-2 text-white">{props.title ? props.title: ""}</h1>
                 <p className="text-white mt-0 mb-5">
-<<<<<<< HEAD
-                {props.body ? props.body: ""}
-=======
                   This is your profile page. You can see all your patients and their issues
->>>>>>> f6046cb3ff492e4c2c6b57d4542d71bdb20429b0
                 </p>
               </Col>
             </Row>

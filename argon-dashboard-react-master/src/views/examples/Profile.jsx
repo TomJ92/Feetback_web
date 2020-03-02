@@ -100,11 +100,7 @@ class Profile extends React.Component {
                     </h3>
                     <div className="h5 font-weight-300">
                       <i className="ni location_pin mr-2" />
-<<<<<<< HEAD
-                      Bucharest, Ronia
-=======
                       Paris, France
->>>>>>> f6046cb3ff492e4c2c6b57d4542d71bdb20429b0
                     </div>
                     <div className="h5 mt-4">
                       <i className="ni business_briefcase-24 mr-2" />
