@@ -17,6 +17,8 @@
 */
 import React from "react";
 import { Link } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
+
 // reactstrap components
 import {
   DropdownMenu,
@@ -35,8 +37,9 @@ import {
   Media
 } from "reactstrap";
 
-class AdminNavbar extends React.Component {
-  render() {
+function AdminNavbar() {
+    const history = useHistory();
+    let info = JSON.parse(localStorage.getItem("CURRENT_USER"));
     return (
       <>
         <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
@@ -45,7 +48,7 @@ class AdminNavbar extends React.Component {
               className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
               to="/"
             >
-              {this.props.brandText}
+              
             </Link>
             <Nav className="align-items-center d-none d-md-flex" navbar>
               <UncontrolledDropdown nav>
@@ -59,7 +62,11 @@ class AdminNavbar extends React.Component {
                     </span>
                     <Media className="ml-2 d-none d-lg-block">
                       <span className="mb-0 text-sm font-weight-bold">
-                        Tom JOUVET
+                        {
+                        (info) ? 
+                        `${info.name} ${info.lastname}`
+                        : "undefined"
+                        }
                       </span>
                     </Media>
                   </Media>
@@ -85,7 +92,13 @@ class AdminNavbar extends React.Component {
                     <span>Support</span>
                   </DropdownItem>
                   <DropdownItem divider />
-                  <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
+                  <DropdownItem href="#pablo" onClick={() => {
+                    
+                    localStorage.removeItem("CURRENT_USER");
+                    localStorage.removeItem("TOKEN");
+                    history.push("/auth/login");
+
+                  }}>
                     <i className="ni ni-user-run" />
                     <span>Logout</span>
                   </DropdownItem>
@@ -97,6 +110,5 @@ class AdminNavbar extends React.Component {
       </>
     );
   }
-}
 
 export default AdminNavbar;
