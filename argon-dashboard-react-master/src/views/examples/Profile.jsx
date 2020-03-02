@@ -87,10 +87,6 @@ class Profile extends React.Component {
                           <span className="description">Friends</span>
                         </div>
                         <div>
-                          <span className="heading">10</span>
-                          <span className="description">Photos</span>
-                        </div>
-                        <div>
                           <span className="heading">89</span>
                           <span className="description">Comments</span>
                         </div>
@@ -104,25 +100,20 @@ class Profile extends React.Component {
                     </h3>
                     <div className="h5 font-weight-300">
                       <i className="ni location_pin mr-2" />
+<<<<<<< HEAD
                       Bucharest, Ronia
+=======
+                      Paris, France
+>>>>>>> f6046cb3ff492e4c2c6b57d4542d71bdb20429b0
                     </div>
                     <div className="h5 mt-4">
                       <i className="ni business_briefcase-24 mr-2" />
-                      Solution Manager - Creative Tim Officer
+                     Podologue
                     </div>
                     <div>
                       <i className="ni education_hat mr-2" />
-                      University of Computer Science
+                      University of ...
                     </div>
-                    <hr className="my-4" />
-                    <p>
-                      Ryan — the name taken by Melbourne-raised, Brooklyn-based
-                      Nick Murphy — writes, performs and records all of his own
-                      music.
-                    </p>
-                    <a href="#pablo" onClick={e => e.preventDefault()}>
-                      Show more
-                    </a>
                   </div>
                 </CardBody>
               </Card>
@@ -301,22 +292,6 @@ class Profile extends React.Component {
                           </FormGroup>
                         </Col>
                       </Row>
-                    </div>
-                    <hr className="my-4" />
-                    {/* Description */}
-                    <h6 className="heading-small text-muted mb-4">About me</h6>
-                    <div className="pl-lg-4">
-                      <FormGroup>
-                        <label>About Me</label>
-                        <Input
-                          className="form-control-alternative"
-                          placeholder="A few words about you ..."
-                          rows="4"
-                          defaultValue="A beautiful Dashboard for Bootstrap 4. It is Free and
-                          Open Source."
-                          type="textarea"
-                        />
-                      </FormGroup>
                     </div>
                   </Form>
                 </CardBody>
