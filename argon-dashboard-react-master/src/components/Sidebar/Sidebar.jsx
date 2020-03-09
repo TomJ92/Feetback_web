@@ -146,10 +146,6 @@ class Sidebar extends React.Component {
                 className="dropdown-menu-arrow"
                 right
               >
-                <DropdownItem>Action</DropdownItem>
-                <DropdownItem>Another action</DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>Something else here</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
             <UncontrolledDropdown nav>
