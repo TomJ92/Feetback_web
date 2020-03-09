@@ -35,8 +35,8 @@ import Anomaly from "components/Anomaly/Anomaly.js";
 import { Redirect } from "react-router";
 
 const PACIENTS_INFO = gql`
-  query {
-    getPacients(podiatrist: "1") {
+  query($podiatrist: ID!){
+    getPacients(podiatrist: $podiatrist) {
       status
       message
       pacients {
@@ -53,7 +53,12 @@ const PACIENTS_INFO = gql`
 
 
 export default function TabWidget() {
-  const { loading, error, data } = useQuery(PACIENTS_INFO);
+  let info = JSON.parse(localStorage.getItem("CURRENT_USER"));
+  console.log(info)
+  const { loading, error, data } = useQuery(PACIENTS_INFO, {
+    variables: {
+      podiatrist: ""+`${info.id}`},
+  });
   const history = useHistory();
 
   if (loading) return <p>Loading...</p>;
