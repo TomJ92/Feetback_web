@@ -63,7 +63,11 @@ import {
 
 import Header from "components/Headers/Header.jsx";
 import Graph from "components/Graph/Graph.js";
+<<<<<<< HEAD
 import MainGraph from "components/Graph/MainGraph.js"
+=======
+import MeasuresWidget from "components/TabWidget/MeasuresWidget";
+>>>>>>> 375196cdcaab4589a8583780baa94a815f70e890
 
 export default function Patient (props){
     const history = useHistory();
@@ -80,7 +84,7 @@ export default function Patient (props){
         <Container className="mt--7" fluid>
         <Row className="mt-5">
         <Col className="mb-5 mb-xl-0" xl="6"></Col>
-          <p>Wrong access, return to the pacients list</p> 
+          <p>Wrong access, return to the patients list</p> 
         </Row>
         </Container>
         
@@ -287,7 +291,6 @@ export default function Patient (props){
                 </CardBody>
               </Card>
             </Col>
-
     <Col className="mb-5 mb-xl-0" xl="12">
     <Card className="shadow">
     <CardHeader className="border-0">
@@ -297,107 +300,9 @@ export default function Patient (props){
     </div>
     </Row>
     </CardHeader>
-    <Table className="align-items-center table-flush" responsive>
-    <thead className="thead-light">
-    <tr>
-    <th scope="col">Date</th>
-    <th scope="col">Duration (min)</th>
-    <th scope="col">Average pressure 1</th>
-    <th scope="col">Minimum pressure 1</th>
-    <th scope="col">Maximum pressure 1</th>
-    <th scope="col">Average pressure 2</th>
-    <th scope="col">Minimum pressure 2</th>
-    <th scope="col">Maximum pressure 2</th>
-    <th scope="col">Average pressure 3</th>
-    <th scope="col">Minimum pressure 3</th>
-    <th scope="col">Maximum pressure 3</th>
-    <th scope="col">Average pressure 4</th>
-    <th scope="col">Minimum pressure 4</th>
-    <th scope="col">Maximum pressure 4</th>
-    <th scope="col">Average pressure 5</th>
-    <th scope="col">Minimum pressure 5</th>
-    <th scope="col">Maximum pressure 5</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-    <th scope="row">11/01/2020</th>
-    <td>10</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    </tr>
-    <tr>
-    <th scope="row">11/01/2020</th>
-    <td>10</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    </tr>
-    <tr>
-    <th scope="row">11/01/2020</th>
-    <td>10</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    </tr>
-    <tr>
-    <th scope="row">11/01/2020</th>
-    <td>10</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    <td>12</td>
-    </tr>
-    </tbody>
-    </Table>
+    <CardBody>
+    <MeasuresWidget pacient = {props.location.state.pacient}> </MeasuresWidget>
+    </CardBody>
     </Card>
     </Col>
     </Row>

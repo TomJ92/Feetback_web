@@ -146,10 +146,6 @@ class Sidebar extends React.Component {
                 className="dropdown-menu-arrow"
                 right
               >
-                <DropdownItem>Action</DropdownItem>
-                <DropdownItem>Another action</DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>Something else here</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
             <UncontrolledDropdown nav>
@@ -170,18 +166,6 @@ class Sidebar extends React.Component {
                 <DropdownItem to="/admin/user-profile" tag={Link}>
                   <i className="ni ni-single-02" />
                   <span>My profile</span>
-                </DropdownItem>
-                <DropdownItem to="/admin/user-profile" tag={Link}>
-                  <i className="ni ni-settings-gear-65" />
-                  <span>Settings</span>
-                </DropdownItem>
-                <DropdownItem to="/admin/user-profile" tag={Link}>
-                  <i className="ni ni-calendar-grid-58" />
-                  <span>Activity</span>
-                </DropdownItem>
-                <DropdownItem to="/admin/user-profile" tag={Link}>
-                  <i className="ni ni-support-16" />
-                  <span>Support</span>
                 </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem href="#pablo" onClick={() => {
@@ -229,33 +213,17 @@ class Sidebar extends React.Component {
             </div>
             {/* Form */}
             {/* Navigation */}
-            <Nav navbar>{this.createLinks(routes)}</Nav>
-            {/* Divider */}
-            <hr className="my-3" />
-            {/* Heading */}
-            <h6 className="navbar-heading text-muted">Documentation</h6>
-            {/* Navigation */}
-            <Nav className="mb-md-3" navbar>
-              <NavItem>
-                <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/documentation/overview?ref=adr-admin-sidebar">
-                  <i className="ni ni-spaceship" />
-                  Getting started
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/documentation/colors?ref=adr-admin-sidebar">
-                  <i className="ni ni-palette" />
-                  Foundation
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/documentation/alerts?ref=adr-admin-sidebar">
-                  <i className="ni ni-ui-04" />
-                  Components
-                </NavLink>
-              </NavItem>
-            </Nav>
-          </Collapse>
+            <ul class="navbar-nav">
+            <li class="nav-item"><a aria-current="page" class="nav-link" href="/admin/index"><i class="ni ni-tv-2 text-primary"></i>Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link" href="/admin/user-profile"><i class="ni ni-single-02 text-yellow"></i>Profile</a></li>
+            <li class="nav-item"><a class="nav-link" href="/auth/login#pablo" onClick={() => {
+                    
+                    localStorage.removeItem("CURRENT_USER");
+                    localStorage.removeItem("TOKEN");
+                    history.push("/auth/login");
+
+                  }}><i class="ni ni-key-25 text-info"></i>Logout</a></li>
+          </ul></Collapse>
         </Container>
       </Navbar>
     );
