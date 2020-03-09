@@ -10,7 +10,8 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer
+  ResponsiveContainer,
+  ReferenceLine
 } from "recharts";
 
 
@@ -67,6 +68,8 @@ export default function Widget1(props) {
         <YAxis />
         <Tooltip />
         <Legend />
+
+        <ReferenceLine y={parseData[0].Pressure} label="Reference" stroke="#8884d8" strokeDasharray="5 5" ></ReferenceLine>
         <Line
           type="monotone"
           dataKey="Pressure"

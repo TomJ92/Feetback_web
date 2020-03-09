@@ -20,6 +20,7 @@ import React from "react";
 import classnames from "classnames";
 // javascipt plugin for creating charts
 import Chart from "chart.js";
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 // react plugin used to create charts
@@ -53,11 +54,24 @@ import {
   chartExample2
 } from "variables/charts.jsx";
 
+import {
+  DropdownMenu,
+  DropdownItem,
+  UncontrolledDropdown,
+  DropdownToggle,
+} from "reactstrap";
+
 import Header from "components/Headers/Header.jsx";
 import Graph from "components/Graph/Graph.js";
+import MainGraph from "components/Graph/MainGraph.js"
 
 export default function Patient (props){
     const history = useHistory();
+
+    const [value, setValue] = useState(-1);
+
+        console.log("The value is")
+    console.log(value)
     if(props.location.state==null)
         return(
         <>
@@ -76,7 +90,83 @@ export default function Patient (props){
       <Header />
     {/* Page content */}
     <Container className="mt--7" fluid>
+    
     <Row className="mt-5">
+    <Col className="mb-5 mb-xl-0" xl="6">
+              <Card className="bg-gradient-default shadow">
+                <CardHeader className="bg-transparent">
+                  <Row className="align-items-center">
+                    <div className="col">
+                      <h6 className="text-uppercase text-light ls-1 mb-1">{
+                      (value== -1) ? 
+                        `All sensors `
+                        : `Sensor ${value +1}`
+                        }                      </h6>
+    <h2 className="text-white mb-0">Pressure values</h2>
+                    </div>
+                    <UncontrolledDropdown nav>
+                <DropdownToggle className="pr-0" nav>
+                  
+                      <Button className="mb-0 text-sm font-weight-bold">
+                        Visualize 
+                      </Button>
+                </DropdownToggle>
+                <DropdownMenu className="dropdown-menu-arrow" right>
+                  <DropdownItem className="noti-title" header tag="div">
+                    <h6 className="text-overflow m-0">Show</h6>
+                  </DropdownItem>
+                  <DropdownItem to="/admin/user-profile" onClick={()=> {
+                    setValue(0)
+                  }} >
+                    <span 
+                  >Sensor 1</span>
+                  </DropdownItem>
+                  <DropdownItem to="/admin/user-profile" onClick={()=> {
+                    setValue(1)
+                  }} >
+                  <span 
+                  >Sensor 2</span>
+                  </DropdownItem>
+                  <DropdownItem to="/admin/user-profile"onClick={()=> {
+                    setValue(2)
+                  }} >
+                  <span 
+                  >Sensor 3</span>
+                  </DropdownItem>
+                  <DropdownItem to="/admin/user-profile" onClick={()=> {
+                    setValue(3)
+                  }}>
+                  <span
+                  >Sensor 4</span>
+                  </DropdownItem>
+                  <DropdownItem to="/admin/user-profile"onClick={()=> {
+                    setValue(4)
+                  }} >
+                  <span 
+                  >Sensor 5</span>
+                  </DropdownItem>
+                  <DropdownItem to="/admin/user-profile" >
+                  <DropdownItem to="/admin/user-profile" onClick={()=> {
+                    setValue(-1)
+                  }}>
+                  <span 
+                  >All sensors</span>
+                  </DropdownItem>
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+                    
+                  </Row>
+                </CardHeader>
+                <CardBody>
+                  {/* Chart */}
+                  
+                  <MainGraph sensorNumber={value} pacient={ props.location.state.pacient} ></MainGraph>
+
+                </CardBody>
+              </Card>
+            </Col>
+
     <Col className="mb-5 mb-xl-0" xl="6">
               <Card className="bg-gradient-default shadow">
 
