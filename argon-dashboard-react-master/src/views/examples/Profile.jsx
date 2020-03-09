@@ -55,12 +55,7 @@ class Profile extends React.Component {
                 <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
                   <div className="d-flex justify-content-between">
                     
-                    <button
-                          className=" btn-icon-clipboard"
-                          data-clipboard-text="circle-08"
-                          id="tooltip63796078"
-                          type="button"
-                        />
+                    Icon
                     
                   </div>
                 </CardHeader>
