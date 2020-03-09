@@ -32,6 +32,7 @@ import {
 } from "reactstrap";
 
 import Anomaly from "components/Anomaly/Anomaly.js";
+import PatientsModal from "components/Modals/PatientsModal.js"
 import { Redirect } from "react-router";
 
 const PACIENTS_INFO = gql`
@@ -94,6 +95,10 @@ export default function TabWidget() {
               </InputGroup>
             </Form>
           </div>
+          <Col>
+          <PatientsModal></PatientsModal>
+
+          </Col>
         </Row>
       </CardHeader>
 
