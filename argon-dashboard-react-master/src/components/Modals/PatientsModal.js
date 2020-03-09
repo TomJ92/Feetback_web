@@ -208,8 +208,8 @@ export default function PatientsModal() {
                     </Media>
                   </Media>
                 </th>
-                <td>{pacient.lastMeetingDate
-                        ? pacient.lastMeetingDate
+                <td>{pacient.registerDate
+                        ? pacient.registerDate
                         : "None"}</td>
                 <td>
                   <div className="custom-control custom-checkbox mb-3">

@@ -33,6 +33,7 @@ import {
 
 import Anomaly from "components/Anomaly/Anomaly.js";
 import PatientsModal from "components/Modals/PatientsModal.js"
+import DeletePatientsModal from "components/Modals/DeletePatientsModal.js"
 import { Redirect } from "react-router";
 
 const PACIENTS_INFO = gql`
@@ -110,6 +111,7 @@ export default function TabWidget() {
             <th scope="col">Last meeting date</th>
             <th scope="col">Anomaly</th>
             <th scope="col"> </th>
+            <th scope="col"> </th>
           </tr>
         </thead>
         <tbody>
@@ -128,11 +130,15 @@ export default function TabWidget() {
                   >
                     Go to profile
                   </Button>
+
+                  <DeletePatientsModal patientId={pacient.id}></DeletePatientsModal>
+
                 </td>
               </tr>
             ))
           ) : (
             <tr>
+              <td>-</td>
               <td>-</td>
               <td>-</td>
               <td>-</td>
