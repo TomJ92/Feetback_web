@@ -110,7 +110,7 @@ export default function TabWidget() {
                 <td>{pacient.email}</td>
                 <td>{pacient.lastMeetingDate ? (pacient.lastMeetingDate) : ("None") }</td>
                 <td>
-                  <Anomaly val={false}></Anomaly>
+                  <Anomaly val={false}> Last Measure anomaly to put here</Anomaly>
                 </td>
                 <td>
                   <Button
