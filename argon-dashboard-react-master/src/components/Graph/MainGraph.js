@@ -134,14 +134,18 @@ export default function MainGraph(props) {
         <YAxis />
         <Tooltip />
         <Legend />
-        {/* {keys.length ? (
+         {
+        (props.sensorNumber !== -1) ?
+         keys.length ? (
             
             keys.map(sensor => {
                 if (sensor !="name")
                 {
                 return (
                 <ReferenceLine y={allData[0][sensor]} label="Reference" stroke="#8884d8" strokeDasharray="5 5"  />
-                )}})): (<></>)} */}
+                )}})): (<></>) : ""
+            
+            } 
         {keys.length ? (
             
             keys.map(sensor => {

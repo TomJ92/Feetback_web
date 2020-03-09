@@ -63,11 +63,8 @@ import {
 
 import Header from "components/Headers/Header.jsx";
 import Graph from "components/Graph/Graph.js";
-<<<<<<< HEAD
 import MainGraph from "components/Graph/MainGraph.js"
-=======
 import MeasuresWidget from "components/TabWidget/MeasuresWidget";
->>>>>>> 375196cdcaab4589a8583780baa94a815f70e890
 
 export default function Patient (props){
     const history = useHistory();
