@@ -35,10 +35,38 @@ var routes = [
   },
   {
     path: "/user-profile",
-    name: "Profile",
+    name: "User Profile",
     icon: "ni ni-single-02 text-yellow",
     component: Profile,
     layout: "/admin"
   },
+  {
+    path: "/login",
+    name: "Login",
+    icon: "ni ni-key-25 text-info",
+    component: Login,
+    layout: "/auth"
+  },
+  {
+    path: "/register",
+    name: "Register",
+    icon: "ni ni-circle-08 text-pink",
+    component: Register,
+    layout: "/auth"
+  },
+  {
+    path: "/patient",
+    name: "Patient's record",
+    icon: "ni ni-tv-2 text-primary",
+    component: Patient,
+    layout: "/admin"
+  },
+  {
+    path: "/patientProfile",
+    name: "Patient's profile",
+    icon: "ni ni-tv-2 text-primary",
+    component: PatientProfile,
+    layout: "/admin"
+  }
 ];
 export default routes;

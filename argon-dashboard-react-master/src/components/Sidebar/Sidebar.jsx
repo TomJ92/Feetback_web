@@ -213,8 +213,17 @@ class Sidebar extends React.Component {
             </div>
             {/* Form */}
             {/* Navigation */}
-            <Nav navbar>{this.createLinks(routes)}</Nav>
-          </Collapse>
+            <ul class="navbar-nav">
+            <li class="nav-item"><a aria-current="page" class="nav-link" href="/admin/index"><i class="ni ni-tv-2 text-primary"></i>Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link" href="/admin/user-profile"><i class="ni ni-single-02 text-yellow"></i>Profile</a></li>
+            <li class="nav-item"><a class="nav-link" href="/auth/login#pablo" onClick={() => {
+                    
+                    localStorage.removeItem("CURRENT_USER");
+                    localStorage.removeItem("TOKEN");
+                    history.push("/auth/login");
+
+                  }}><i class="ni ni-key-25 text-info"></i>Logout</a></li>
+          </ul></Collapse>
         </Container>
       </Navbar>
     );
