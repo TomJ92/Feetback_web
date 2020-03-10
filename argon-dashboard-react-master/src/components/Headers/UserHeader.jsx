@@ -41,7 +41,7 @@ export default function UserHeader(props) {
               <Col lg="7" md="10">
         <h1 className="display-2 text-white">{props.title ? props.title: ""}</h1>
                 <p className="text-white mt-0 mb-5">
-                  This is your profile page. You can see all your patients and their issues
+                  {props.body ? props.body: "This is your profile page. You can see all your patients and their issues"}
                 </p>
               </Col>
             </Row>

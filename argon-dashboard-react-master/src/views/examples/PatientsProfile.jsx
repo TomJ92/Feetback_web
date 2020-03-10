@@ -16,9 +16,11 @@
 
 */
 import React from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 import { useHistory } from 'react-router-dom';
+import { useState } from "react";
+
 
 // reactstrap components
 import {
@@ -35,9 +37,84 @@ import {
 } from "reactstrap";
 // core components
 import UserHeader from "components/Headers/UserHeader.jsx";
+import DeletePatientsModal from "components/Modals/DeletePatientsModal.js";
+  const UPDATE_PATIENT = gql`
+  mutation($patient: ID!, $change: UserUpdateInput!) {
+    updateUser(user: $patient, change: $change) {
+      status
+      message
+    }
+  }
+`;
 
 export default function PatientsProfile (props){
-  const info = props.location.state
+  var info = props.location.state;
+  const [exampleModal, setExampleModal] = useState(false);
+  const [updatePatient] = useMutation(UPDATE_PATIENT);
+  console.log(info);
+  function toggleModal() {
+    setExampleModal(!exampleModal);
+  }
+  function getCurrentDateTime(dateSeparateSymbol: string = '-') {
+        const dateTime = new Date();
+        let dateDay: string = formatWithTwoDigits(String(dateTime.getDate()));
+        let month: string = formatWithTwoDigits(String(dateTime.getMonth() + 1));
+
+        let hour : string = formatWithTwoDigits(String(dateTime.getHours()));
+        let minutes : string = formatWithTwoDigits(String(dateTime.getMinutes()));
+        let seconds : string = formatWithTwoDigits(String(dateTime.getSeconds()));
+
+        return `${dateTime.getFullYear()}${dateSeparateSymbol}${month}${dateSeparateSymbol}${dateDay} ${hour}:${minutes}:${seconds}`;
+    }
+
+    function formatWithTwoDigits(value: number | string) {
+        if (+value < 10) {
+            return `0${value}`;
+        }
+        return String(value);
+    }
+    function updateSensors()
+    {
+
+    }
+  const date_today = getCurrentDateTime();
+ function updateToday(patientId){
+    if (info.id !==null || patientId==null){
+      toggleModal()
+    }
+    try {
+        updatePatient({
+        variables: {
+          patient: patientId,
+          change: {lastMeetingDate: date_today}
+        }
+      }).then(
+        data => {
+          if (
+            data == undefined ||
+            data.data == undefined ||
+            data.data.updateUser == undefined ||
+            !data.data.updateUser.status
+          ) {
+
+            
+            console.log(data.data.updateUser.message);
+
+
+          } else {
+            console.log("donde")
+           window.location.reload();
+          }
+        },
+        error => {
+          console.log("error ", error);
+        }
+      );
+    } catch (error) {
+      console.log(error.message);
+    }
+
+  }
   console.log(info)
   if(info == undefined || info.podiatrist == undefined || info.patientId == undefined)
     return (<> 
@@ -65,35 +142,15 @@ export default function PatientsProfile (props){
                     <div className="card-profile-image">
                       <a href="#pablo" onClick={e => e.preventDefault()}>
                         <img
-                          alt="..."
+                          alt="patient_logo"
                           className="rounded-circle"
-                          src={require("assets/img/theme/team-4-800x800.jpg")}
+                          src={require("assets/img/theme/patient.png")}
                         />
                       </a>
                     </div>
                   </Col>
                 </Row>
                 <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4 mb-5">
-                  <div className="d-flex justify-content-between">
-                    <Button
-                      className="mr-4"
-                      color="info"
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                      size="sm"
-                    >
-                      Connect
-                    </Button>
-                    <Button
-                      className="float-right"
-                      color="default"
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
-                      size="sm"
-                    >
-                      Message
-                    </Button>
-                  </div>
                 </CardHeader>
                 <CardBody className="pt-0 pt-md-4">
                   <div className="text-center">
@@ -101,11 +158,18 @@ export default function PatientsProfile (props){
                       {info.name} {info.lastname}
                       <span className="font-weight-light"></span>
                     </h3>
-
                     <hr className="my-4" />
                     <p>
-                      <b>Email:</b> <a href="">{info.email}</a>
+                      <b>Email :</b> <a href="">{info.email}</a>
                     </p>
+                    <Button
+                      color="default"
+                      href="#pablo"
+                      onClick={e => e.preventDefault()}
+                      size="sm"
+                    >
+                      Schedule a meeting
+                    </Button>
                   </div>
                 </CardBody>
               </Card>
@@ -115,25 +179,12 @@ export default function PatientsProfile (props){
                 <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
                     <Col xs="8">
-                      <h3 className="mb-0">Last meeting</h3>
-                    </Col>
-                    <Col className="text-right" xs="4">
-                      <Button
-                        color="primary"
-                        href="#pablo"
-                        onClick={e => e.preventDefault()}
-                        size="sm"
-                      >
-                        Reject patient
-                      </Button>
+                      <h3 className="mb-0">Informations</h3>
                     </Col>
                   </Row>
                 </CardHeader>
                 <CardBody>
                   <Form>
-                    <h6 className="heading-small text-muted mb-4">
-                      Meeting info:
-                    </h6>
                     <div className="pl-lg-4">
                       <Row>
                         <Col lg="6">
@@ -159,13 +210,65 @@ export default function PatientsProfile (props){
                             <Button
                             className="mt-4"
                         color="primary"
-                        href="#pablo"
-                        onClick={e => e.preventDefault()}
+                        onClick={() => updateToday(info.patientId)}
                             >
                               Update to today
                             </Button>
                           </FormGroup>
                         </Col>
+                      </Row>
+                      <Row>
+                      <Col lg="10">
+                      <p>Put on the foot mapping the sensors position</p>
+                      <img
+                          alt="foot_mapping"
+                          src={require("assets/img/theme/circle-1.png")}
+                          class="inner-image"
+                          width="40em"
+                          height="40em"
+                          />
+                           <img
+                          alt="foot_mapping"
+                          src={require("assets/img/theme/circle-2.png")}
+                          class="inner-image"
+                          width="40em"
+                          height="40em"
+                          />
+                           <img
+                          alt="foot_mapping"
+                          src={require("assets/img/theme/circle-3.png")}
+                          class="inner-image"
+                          width="40em"
+                          height="40em"
+                          />
+                           <img
+                          alt="foot_mapping"
+                          src={require("assets/img/theme/circle-4.png")}
+                          class="inner-image"
+                          width="40em"
+                          height="40em"
+                          />
+                           <img
+                          alt="foot_mapping"
+                          src={require("assets/img/theme/circle-5.png")}
+                          class="inner-image"
+                          width="40em"
+                          height="40em"
+                          />
+                      <img
+                          alt="foot_mapping"
+                          src={require("assets/img/theme/foot.png")}
+                          width="80%"
+                          height="80%"
+                        />
+                        <Button
+                            className="mt-4"
+                        color="primary"
+                        onClick={() => updateSensors(info.patientId)}
+                            >
+                              Save sensors location
+                            </Button>
+                      </Col>
                       </Row>
                     </div>
                     {/* Address */}
@@ -179,3 +282,5 @@ export default function PatientsProfile (props){
       </>
     );
   }
+
+

@@ -33,7 +33,7 @@ class Login extends React.Component {
                   © 2020{" "}
                   <a
                     className="font-weight-bold ml-1"
-                    href="https://feetback.landen.co"
+                    href="https://tomj92.github.io/Feetback/"
                     target="_blank"
                   >
                     Feetback
@@ -44,7 +44,7 @@ class Login extends React.Component {
                 <Nav className="nav-footer justify-content-center justify-content-xl-end">
                   <NavItem>
                     <NavLink
-                      href="https://feetback.landen.co"
+                      href="https://tomj92.github.io/Feetback/"
                       target="_blank"
                     >
                       Feetback
