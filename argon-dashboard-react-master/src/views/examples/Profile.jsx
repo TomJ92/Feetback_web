@@ -34,7 +34,48 @@ import {
 import UserHeader from "components/Headers/UserHeader.jsx";
 
 class Profile extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      email: '',
+      firstname:'',
+      lastname:'',
+      password: '',
+      confirmpassword: '',
+    };
+  }
+  
+  handleEmailChange = (evt) => {
+    this.setState({ email: evt.target.value });
+  };
+  
+  handlePasswordChange = (evt) => {
+    this.setState({ password: evt.target.value });
+  };
+
+  handleFirstNameChange = (evt) => {
+    this.setState({ firstname: evt.target.value });
+  };
+  
+  handleLastNameChange = (evt) => {
+    this.setState({ lastname: evt.target.value });
+  };
+
+  handleConfirmPasswordChange = (evt) => {
+    this.setState({ confirmpassword: evt.target.value });
+  };
+  
+  handleSubmit = () => {
+    const { email, firstname, lastname, password, confirmpassword } = this.state;
+  }
   render() {
+    const { email, firstname, lastname, password, confirmpassword } = this.state;
+    const enabled =
+          email.length > 0 &&
+          password.length > 0 &&
+          firstname.length > 0 &&
+          lastname.length > 0 &&
+          confirmpassword.length > 0;  
     return (
       <>
         <UserHeader />
@@ -102,7 +143,7 @@ class Profile extends React.Component {
                   </Row>
                 </CardHeader>
                 <CardBody>
-                  <Form>
+                  <Form onSubmit={this.handleSubmit}>
                     <h6 className="heading-small text-muted mb-4">
                       User information
                     </h6>
@@ -122,6 +163,8 @@ class Profile extends React.Component {
                               id="input-email"
                               placeholder="name@example.com"
                               type="email"
+                              value={this.state.email}
+                              onChange={this.handleEmailChange}
                             />
                           </FormGroup>
                         </Col>
@@ -140,6 +183,8 @@ class Profile extends React.Component {
                               id="input-first-name"
                               placeholder="First name"
                               type="text"
+                              value={this.state.firstname}
+                              onChange={this.handleFirstNameChange}
                             />
                           </FormGroup>
                         </Col>
@@ -155,7 +200,9 @@ class Profile extends React.Component {
                               className="form-control-alternative"
                               id="input-last-name"
                               placeholder="Last name"
-                              type="text"
+                              type="text"                              
+                              value={this.state.lastname}
+                              onChange={this.handleLastNameChange}
                             />
                           </FormGroup>
                         </Col>
@@ -175,6 +222,8 @@ class Profile extends React.Component {
                               id="input-first-name"
                               placeholder="Password"
                               type="password"
+                              value={this.state.password}
+                              onChange={this.handlePasswordChange}
                             />
                           </FormGroup>
                         </Col>
@@ -191,9 +240,21 @@ class Profile extends React.Component {
                               id="input-last-name"
                               placeholder="Confirm Password"
                               type="password"
+                              value={this.state.confirmpassword}
+                              onChange={this.handleConfirmPasswordChange}
                             />
-                          </FormGroup>
+                          </FormGroup> 
+
+                          <Button 
+                        color="primary"
+                        href="#pablo"
+                        onClick={e => e.preventDefault()}
+                        disabled={!enabled}
+                        size="sm">
+                        Login
+                        </Button>
                         </Col>
+                       
                       </Row>
                     </div>
                   </Form>
