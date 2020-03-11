@@ -123,25 +123,17 @@ class Profile extends React.Component {
                 </CardBody>
               </Card>
             </Col>
+
             <Col className="order-xl-1" xl="8">
               <Card className="bg-secondary shadow">
                 <CardHeader className="bg-white border-0">
                   <Row className="align-items-center">
-                    <Col xs="8">
+                    <Col xs="12">
                       <h3 className="mb-0">My account</h3>
-                    </Col>
-                    <Col className="text-right" xs="4">
-                      <Button
-                        color="primary"
-                        href="#pablo"
-                        onClick={e => e.preventDefault()}
-                        size="sm"
-                      >
-                        Settings
-                      </Button>
-                    </Col>
+                    </Col>                    
                   </Row>
                 </CardHeader>
+                
                 <CardBody>
                   <Form onSubmit={this.handleSubmit}>
                     <h6 className="heading-small text-muted mb-4">
