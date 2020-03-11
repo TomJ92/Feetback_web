@@ -75,7 +75,8 @@ class Profile extends React.Component {
           password.length > 0 &&
           firstname.length > 0 &&
           lastname.length > 0 &&
-          confirmpassword.length > 0;  
+          password == confirmpassword;
+
     return (
       <>
         <UserHeader />
