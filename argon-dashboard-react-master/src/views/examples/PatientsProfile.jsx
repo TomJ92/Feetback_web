@@ -223,10 +223,16 @@ export default function PatientsProfile (props){
                       <Row>
                       <Col lg="10">
                       <p>Put on the foot mapping the sensors position</p>
+                      <div>
+                      <img
+                          alt="foot_mapping"
+                          src={require("assets/img/theme/foot.png")}
+                          class="position-sticky w-50 p-3"
+                        />
                       <img
                           alt="foot_mapping"
                           src={require("assets/img/theme/circle-1.png")}
-                          class="inner-image"
+                          class="position-relative"
                           width="40em"
                           height="40em"
                           />
@@ -258,12 +264,7 @@ export default function PatientsProfile (props){
                           width="40em"
                           height="40em"
                           />
-                      <img
-                          alt="foot_mapping"
-                          src={require("assets/img/theme/foot.png")}
-                          width="80%"
-                          height="80%"
-                        />
+                          </div>
                         <table cellpadding="10em">
                         <tbody>
                         <tr>
