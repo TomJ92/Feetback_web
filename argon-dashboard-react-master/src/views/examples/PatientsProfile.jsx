@@ -38,6 +38,7 @@ import {
 // core components
 import UserHeader from "components/Headers/UserHeader.jsx";
 import DeletePatientsModal from "components/Modals/DeletePatientsModal.js";
+//QUERY TO UPDATE A PATIENT USER WITH IS ID AND THE FIELD TO CHANGE
   const UPDATE_PATIENT = gql`
   mutation($patient: ID!, $change: UserUpdateInput!) {
     updateUser(user: $patient, change: $change) {
@@ -55,6 +56,7 @@ export default function PatientsProfile (props){
   function toggleModal() {
     setExampleModal(!exampleModal);
   }
+  //RETURN DATE IN THE DESIRED FORMAT
   function getCurrentDateTime(dateSeparateSymbol: string = '-') {
         const dateTime = new Date();
         let dateDay: string = formatWithTwoDigits(String(dateTime.getDate()));
@@ -73,6 +75,7 @@ export default function PatientsProfile (props){
         }
         return String(value);
     }
+    //UPDATE SENSORS POSITION ON THE FOOT
     function updateSensors()
     {
 
@@ -131,7 +134,7 @@ export default function PatientsProfile (props){
 
     return (
       <>
-        <UserHeader title={`Welcome to ${info.name} ${info.lastname}  profile's`} body={"Here you can register the last meeting for your patient, also you're able to let go the patient.  "} />
+        <UserHeader title={`Welcome to ${info.name} ${info.lastname}  profile`} body={"Here you can register the last meeting for your patient and change the sensors' position on his foot.  "} />
         {/* Page content */}
         <Container className="mt--7" fluid>
           <Row>
@@ -220,10 +223,16 @@ export default function PatientsProfile (props){
                       <Row>
                       <Col lg="10">
                       <p>Put on the foot mapping the sensors position</p>
+                      <div>
+                      <img
+                          alt="foot_mapping"
+                          src={require("assets/img/theme/foot.png")}
+                          class="position-sticky w-50 p-3"
+                        />
                       <img
                           alt="foot_mapping"
                           src={require("assets/img/theme/circle-1.png")}
-                          class="inner-image"
+                          class="position-relative"
                           width="40em"
                           height="40em"
                           />
@@ -255,19 +264,27 @@ export default function PatientsProfile (props){
                           width="40em"
                           height="40em"
                           />
-                      <img
-                          alt="foot_mapping"
-                          src={require("assets/img/theme/foot.png")}
-                          width="80%"
-                          height="80%"
-                        />
-                        <Button
+                          </div>
+                        <table cellpadding="10em">
+                        <tbody>
+                        <tr>
+                        <td><Button
                             className="mt-4"
                         color="primary"
                         onClick={() => updateSensors(info.patientId)}
                             >
                               Save sensors location
-                            </Button>
+                            </Button></td>
+                            <td><Button
+                            className="mt-4"
+                        color="primary"
+                        onClick={() => updateSensors(info.patientId)}
+                            >
+                              Change foot mapping image
+                            </Button></td>
+                        </tr>
+                        </tbody>
+                        </table>
                       </Col>
                       </Row>
                     </div>
