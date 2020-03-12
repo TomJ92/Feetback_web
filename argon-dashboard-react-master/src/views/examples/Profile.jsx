@@ -16,7 +16,10 @@
 
 */
 import React from "react";
-
+import { useQuery, useMutation } from "@apollo/react-hooks";
+import { gql } from "apollo-boost";
+import { useHistory } from 'react-router-dom';
+import { useState } from "react";
 // reactstrap components
 import {
   Button,
@@ -32,18 +35,77 @@ import {
 } from "reactstrap";
 // core components
 import UserHeader from "components/Headers/UserHeader.jsx";
-
-class Profile extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      email: '',
-      firstname:'',
-      lastname:'',
-      password: '',
-      confirmpassword: '',
-    };
+//QUERY TO UPDATE A PATIENT USER WITH IS ID AND THE FIELD TO CHANGE
+  const UPDATE_PODIATRIST = gql`
+  mutation($podiatrist: ID!, $change: UserUpdateInput!) {
+    updateUser(user: $podiatrist, change: $change) {
+      status
+      message
+    }
   }
+`;
+
+export default function Profile(props)
+{
+  const history = useHistory();
+  let info = JSON.parse(localStorage.getItem("CURRENT_USER"));
+  var email="";
+  var password="";
+  var confirmpassword="";
+  var name="";
+  var lastname="";
+  const [exampleModal, setExampleModal] = useState(false);
+  const [updatePodiatrist] = useMutation(UPDATE_PODIATRIST);
+  function toggleModal() {
+    setExampleModal(!exampleModal);
+  }
+
+  function changeEmail(podiatristID){
+    if (info.id !==null || podiatristID==null){
+      toggleModal()
+    }
+    try {
+        updatePodiatrist({
+        variables: {
+          patient: podiatristID,
+          change: {email: email}
+        }
+      }).then(
+        data => {
+          if (
+            data == undefined ||
+            data.data == undefined ||
+            data.data.updateUser == undefined ||
+            !data.data.updateUser.status
+          ) {
+
+            
+            console.log(data.data.updateUser.message);
+
+
+          } else {
+            console.log("donde")
+           window.location.reload();
+          }
+        },
+        error => {
+          console.log("error ", error);
+        }
+      );
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  function changeName(podiatristID){};
+  function changeLastName(podiatristID){};
+  function changePassword(podiatristID){};
+  /*
+  const enabled =
+          email.length > 0 &&
+          password.length > 0 &&
+          firstname.length > 0 &&
+          lastname.length > 0 &&
+          password == confirmpassword;  
   
   handleEmailChange = (evt) => {
     this.setState({ email: evt.target.value });
@@ -68,15 +130,14 @@ class Profile extends React.Component {
   handleSubmit = () => {
     const { email, firstname, lastname, password, confirmpassword } = this.state;
   }
-  render() {
-    const { email, firstname, lastname, password, confirmpassword } = this.state;
-    const enabled =
-          email.length > 0 &&
-          password.length > 0 &&
-          firstname.length > 0 &&
-          lastname.length > 0 &&
-          password == confirmpassword;
-
+  */
+  function change(patientID)
+  {
+    changeEmail(patientID);
+    changeName(patientID);
+    changeLastName(patientID);
+    changePassword(patientID);
+  }
     return (
       <>
         <UserHeader />
@@ -89,37 +150,23 @@ class Profile extends React.Component {
                   <Col className="order-lg-2" lg="3">
                     <div className="card-profile-image">
                       <a href="#pablo" onClick={e => e.preventDefault()}>
-                        
+                        <img
+                          alt="patient_logo"
+                          className="rounded-circle"
+                          src={require("assets/img/theme/doctor.png")}
+                        />
                       </a>
                     </div>
                   </Col>
                 </Row>
-                <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                  <div className="d-flex justify-content-between">
-                    
-                    Icon
-                    
-                  </div>
+                <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4 mb-5">
                 </CardHeader>
                 <CardBody className="pt-0 pt-md-4">
                   
                   <div className="text-center">
                     <h3>
-                      Manuel Garcia
-                      <span className="font-weight-light">, 22</span>
+                      {info.name} {info.lastname}
                     </h3>
-                    <div className="h5 font-weight-300">
-                      <i className="ni location_pin mr-2" />
-                      Paris, France
-                    </div>
-                    <div className="h5 mt-4">
-                      <i className="ni business_briefcase-24 mr-2" />
-                     Podologue
-                    </div>
-                    <div>
-                      <i className="ni education_hat mr-2" />
-                      ECE Paris.Lyon
-                    </div>
                   </div>
                 </CardBody>
               </Card>
@@ -136,13 +183,12 @@ class Profile extends React.Component {
                 </CardHeader>
                 
                 <CardBody>
-                  <Form onSubmit={this.handleSubmit}>
+                  <Form /*onSubmit={this.handleSubmit}*/>
                     <h6 className="heading-small text-muted mb-4">
                       User information
                     </h6>
                     <div className="pl-lg-4">
                       <Row>
-                        
                         <Col lg="12">
                           <FormGroup>
                             <label
@@ -154,14 +200,22 @@ class Profile extends React.Component {
                             <Input
                               className="form-control-alternative"
                               id="input-email"
-                              placeholder="name@example.com"
+                              placeholder={info.email}
                               type="email"
-                              value={this.state.email}
-                              onChange={this.handleEmailChange}
+                              value={email}
                             />
                           </FormGroup>
                         </Col>
                       </Row>
+                       <Button 
+                        color="primary"
+                        href="#pablo"
+                        onClick={changeEmail}
+                        onChaneg
+                        //disabled={!enabled}
+                        size="sm">
+                        Change email
+                        </Button>
                       <Row>
                         <Col lg="6">
                           <FormGroup>
@@ -174,12 +228,20 @@ class Profile extends React.Component {
                             <Input
                               className="form-control-alternative"
                               id="input-first-name"
-                              placeholder="First name"
+                              placeholder={info.name}
                               type="text"
-                              value={this.state.firstname}
-                              onChange={this.handleFirstNameChange}
+                              value={name}
                             />
                           </FormGroup>
+                          <Button 
+                        color="primary"
+                        href="#pablo"
+                        onClick={changeEmail}
+                        onChaneg
+                        //disabled={!enabled}
+                        size="sm">
+                        Change name
+                        </Button>
                         </Col>
                         <Col lg="6">
                           <FormGroup>
@@ -192,12 +254,20 @@ class Profile extends React.Component {
                             <Input
                               className="form-control-alternative"
                               id="input-last-name"
-                              placeholder="Last name"
-                              type="text"                              
-                              value={this.state.lastname}
-                              onChange={this.handleLastNameChange}
+                              placeholder={info.lastname}
+                              type="text"      
+                              value={lastname}                        
                             />
                           </FormGroup>
+                          <Button 
+                        color="primary"
+                        href="#pablo"
+                        onClick={changeEmail}
+                        onChaneg
+                        //disabled={!enabled}
+                        size="sm">
+                        Change last name
+                        </Button>
                         </Col>
                       </Row>
 
@@ -213,12 +283,20 @@ class Profile extends React.Component {
                             <Input
                               className="form-control-alternative"
                               id="input-first-name"
-                              placeholder="Password"
+                              placeholder={info.password}
                               type="password"
-                              value={this.state.password}
-                              onChange={this.handlePasswordChange}
+                              value={password}
                             />
                           </FormGroup>
+                          <Button 
+                        color="primary"
+                        href="#pablo"
+                        onClick={changeEmail}
+                        onChaneg
+                        //disabled={!enabled}
+                        size="sm">
+                        Change password
+                        </Button>
                         </Col>
                         <Col lg="6">
                           <FormGroup>
@@ -231,21 +309,11 @@ class Profile extends React.Component {
                             <Input
                               className="form-control-alternative"
                               id="input-last-name"
-                              placeholder="Confirm Password"
+                              placeholder={info.password}
                               type="password"
-                              value={this.state.confirmpassword}
-                              onChange={this.handleConfirmPasswordChange}
+                              value={confirmpassword}
                             />
                           </FormGroup> 
-
-                          <Button 
-                        color="primary"
-                        href="#pablo"
-                        onClick={e => e.preventDefault()}
-                        disabled={!enabled}
-                        size="sm">
-                        Login
-                        </Button>
                         </Col>
                        
                       </Row>
@@ -259,6 +327,3 @@ class Profile extends React.Component {
       </>
     );
   }
-}
-
-export default Profile;
