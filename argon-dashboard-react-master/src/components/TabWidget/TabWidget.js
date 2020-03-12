@@ -9,6 +9,9 @@ import { gql } from "apollo-boost";
 import { useHistory } from 'react-router-dom';
 
 
+import { Searchbar } from 'react-native-paper';
+
+
 
 // reactstrap components
 import {
@@ -54,6 +57,20 @@ const PACIENTS_INFO = gql`
 
 export default function TabWidget() {
   const { loading, error, data } = useQuery(PACIENTS_INFO);
+
+  state = {
+    firstQuery: '',
+  };
+
+  const { firstQuery } = this.state;
+
+  let info = JSON.parse(localStorage.getItem("CURRENT_USER"));
+  console.log(info)
+  const { loading, error, data } = useQuery(PACIENTS_INFO, {
+    variables: {
+      podiatrist: ""+`${info.id}`},
+  });
+
   const history = useHistory();
 
   if (loading) return <p>Loading...</p>;
@@ -75,12 +92,11 @@ export default function TabWidget() {
             <h3 className="mb-0">List of patients</h3>
             <Form className="mt-4 mb-5 mb-xl-0 d-md-none">
               <InputGroup className="input-group-rounded input-group-merge">
-                <Input
-                  aria-label="Search"
-                  className="form-control-rounded form-control-prepended"
-                  placeholder="Search a patient"
-                  type="search"
-                />
+                <Searchbar
+        placeholder="Search"
+        onChangeText={query => { this.setState({ firstQuery: query }); }}
+        value={firstQuery}
+      />
                 <InputGroupAddon addonType="prepend">
                   <InputGroupText>
                     <span className="fa fa-search" />
