@@ -49,11 +49,21 @@ export default function Profile(props)
 {
   const history = useHistory();
   let info = JSON.parse(localStorage.getItem("CURRENT_USER"));
-  var email="";
-  var password="";
-  var confirmpassword="";
-  var name="";
-  var lastname="";
+  console.log(info);
+  var email=info.email;
+  var password=info.password;
+  var confirmpassword=info.password;
+  var name=info.name;
+  var lastname=info.lastname;
+  /*
+  this.handleEmailChange= this.handleEmailChange.bind(this);
+  this.handleSubmit= this.handleSubmit.bind(this);
+  this.handlePasswordChange= this.handlePasswordChange.bind(this);
+  this.handleFirstNameChange= this.handleFirstNameChange.bind(this);
+  this.handleLastNameChange= this.handleLastNameChange.bind(this);
+  this.handleConfirmPasswordChange= this.handleConfirmPasswordChange.bind(this);
+  */
+
   const [exampleModal, setExampleModal] = useState(false);
   const [updatePodiatrist] = useMutation(UPDATE_PODIATRIST);
   function toggleModal() {
@@ -67,7 +77,7 @@ export default function Profile(props)
     try {
         updatePodiatrist({
         variables: {
-          patient: podiatristID,
+          podiatrist: podiatristID,
           change: {email: email}
         }
       }).then(
@@ -99,45 +109,48 @@ export default function Profile(props)
   function changeName(podiatristID){};
   function changeLastName(podiatristID){};
   function changePassword(podiatristID){};
-  /*
-  const enabled =
+  
+ /* const enabled =
           email.length > 0 &&
           password.length > 0 &&
-          firstname.length > 0 &&
+          name.length > 0 &&
           lastname.length > 0 &&
           password == confirmpassword;  
-  
-  handleEmailChange = (evt) => {
-    this.setState({ email: evt.target.value });
-  };
-  
-  handlePasswordChange = (evt) => {
-    this.setState({ password: evt.target.value });
-  };
-
-  handleFirstNameChange = (evt) => {
-    this.setState({ firstname: evt.target.value });
-  };
-  
-  handleLastNameChange = (evt) => {
-    this.setState({ lastname: evt.target.value });
-  };
-
-  handleConfirmPasswordChange = (evt) => {
-    this.setState({ confirmpassword: evt.target.value });
-  };
-  
-  handleSubmit = () => {
-    const { email, firstname, lastname, password, confirmpassword } = this.state;
-  }
   */
-  function change(patientID)
-  {
-    changeEmail(patientID);
-    changeName(patientID);
-    changeLastName(patientID);
-    changePassword(patientID);
-  }
+  function handleEmailChange(evt){
+    email=evt.target.value;
+    console.log("Email change");
+    console.log(email);
+  };
+  
+  function handlePasswordChange(evt){
+    password=evt.target.value;
+    console.log("Password change");
+    console.log(password);
+  };
+
+  function handleFirstNameChange(evt){
+    name= evt.target.value;
+    console.log("First name change");
+    console.log(name);
+  };
+  
+  function handleLastNameChange(evt){
+    lastname=evt.target.value;
+    console.log("Last name change");
+    console.log(lastname);
+  };
+
+  function handleConfirmPasswordChange(evt){
+    confirmpassword = evt.target.value;
+    console.log("Confirm password change");
+    console.log(confirmpassword);
+  };
+  
+  function handleSubmit(){
+    const { email, name, lastname, password, confirmpassword } = this.state;
+    console.log("Submmit change");
+  };
     return (
       <>
         <UserHeader />
@@ -200,9 +213,9 @@ export default function Profile(props)
                             <Input
                               className="form-control-alternative"
                               id="input-email"
-                              placeholder={info.email}
                               type="email"
-                              value={email}
+                              defaultValue = {info.email}
+                              onChange={handleEmailChange}
                             />
                           </FormGroup>
                         </Col>
@@ -210,8 +223,7 @@ export default function Profile(props)
                        <Button 
                         color="primary"
                         href="#pablo"
-                        onClick={changeEmail}
-                        onChaneg
+                        onClick={() => changeEmail(email, info.id)}
                         //disabled={!enabled}
                         size="sm">
                         Change email
@@ -228,15 +240,15 @@ export default function Profile(props)
                             <Input
                               className="form-control-alternative"
                               id="input-first-name"
-                              placeholder={info.name}
+                              defaultValue ={info.name}
                               type="text"
-                              value={name}
+                              onChange={handleFirstNameChange}
                             />
                           </FormGroup>
                           <Button 
                         color="primary"
                         href="#pablo"
-                        onClick={changeEmail}
+                        onClick={changeName}
                         onChaneg
                         //disabled={!enabled}
                         size="sm">
@@ -254,15 +266,15 @@ export default function Profile(props)
                             <Input
                               className="form-control-alternative"
                               id="input-last-name"
-                              placeholder={info.lastname}
-                              type="text"      
-                              value={lastname}                        
+                              defaultValue={info.lastname}
+                              type="text"  
+                              onChange={handleLastNameChange}    
                             />
                           </FormGroup>
                           <Button 
                         color="primary"
                         href="#pablo"
-                        onClick={changeEmail}
+                        onClick={changeLastName}
                         onChaneg
                         //disabled={!enabled}
                         size="sm">
@@ -283,15 +295,15 @@ export default function Profile(props)
                             <Input
                               className="form-control-alternative"
                               id="input-first-name"
-                              placeholder={info.password}
+                              defaultValue={info.password}
                               type="password"
-                              value={password}
+                              onChange={handlePasswordChange}
                             />
                           </FormGroup>
                           <Button 
                         color="primary"
                         href="#pablo"
-                        onClick={changeEmail}
+                        onClick={changePassword}
                         onChaneg
                         //disabled={!enabled}
                         size="sm">
@@ -309,9 +321,9 @@ export default function Profile(props)
                             <Input
                               className="form-control-alternative"
                               id="input-last-name"
-                              placeholder={info.password}
+                              defaultValue={info.password}
                               type="password"
-                              value={confirmpassword}
+                              onChange={handleConfirmPasswordChange}
                             />
                           </FormGroup> 
                         </Col>
