@@ -50,15 +50,18 @@ const PACIENTS_INFO = gql`
         email
         lastMeetingDate
         currentPodiatrist
+        anomaly
+        anomaly_threshold
       }
     }
   }
 `;
 
 
+
 export default function TabWidget() {
   let info = JSON.parse(localStorage.getItem("CURRENT_USER"));
-  console.log(info)
+  console.log(info);
   const { loading, error, data } = useQuery(PACIENTS_INFO, {
     variables: {
       podiatrist: ""+`${info.id}`},
@@ -71,42 +74,19 @@ export default function TabWidget() {
 
   const { pacients = [] } = {pacients: data.getPacients.pacients};
 
-  const information = {
-    columns: [
-      {
-        label: 'Name',
-        field: 'name',
-        sort: 'asc',
-        width: 150
-      },
-      {
-        label: 'E-mail',
-        field: 'email',
-        sort: 'asc',
-        width: 270
-      },
-      {
-        label: 'Last meeting date',
-        field: 'lastMeetingDate',
-        sort: 'asc',
-        width: 200
-      },
-      {
-        label: 'Anomaly',
-        field: 'anomaly',
-        sort: 'asc',
-        width: 200
-      },
-      {
-        label: 'Options',
-        field: 'options',
-        sort: 'asc',
-        width: 200
-      }
-    ],
-    rows: pacients
-  };
+  function PatientProfile(pacient)
+  {
 
+    localStorage.removeItem("CURRENT_PATIENT");
+    localStorage.setItem("CURRENT_PATIENT", JSON.stringify(pacient));
+    history.push("/admin/patientProfile", { patientId: pacient.id, podiatrist: "1", name: pacient.name, lastname: pacient.lastname, lastMeetingDate: pacient.lastMeetingDate, email: pacient.email, anomaly_threshold: pacient.anomaly_threshold})
+  };
+  function PatientRecord(pacient)
+  {
+    history.push("/admin/patient", { pacient: pacient.id });
+    localStorage.removeItem("CURRENT_PATIENT");
+    localStorage.setItem("CURRENT_PATIENT", JSON.stringify(pacient));
+  };
 
   // const history = useHistory()
   // const handleButtonClick = (event) => {
@@ -120,16 +100,16 @@ export default function TabWidget() {
         var temp = {}
         temp["name"] = <><a href="" onClick={() => history.push("/admin/patient", { pacient: pacient.id })}> {pacient.name + " " + pacient.lastname}</a></>
         temp["email"] = pacient.email
-        temp["lastMeetingDate"] = pacient.lastMeetingDate ? (pacient.lastMeetingDate) : ("None") 
+        temp["lastMeetingDate"] = pacient.lastMeetingDate ? (pacient.lastMeetingDate) : ("None")
         temp["anomaly"] = <Anomaly val={false}> Last Measure anomaly to put here</Anomaly>
         temp["options"] = <><Button onClick={() => history.push("/admin/patientProfile", { patientId: pacient.id, podiatrist: "1", name: pacient.name, lastname: pacient.lastname, lastMeetingDate: pacient.lastMeetingDate, email: pacient.email})}>Go to profile</Button> <DeletePatientsModal patientId={pacient.id}></DeletePatientsModal></>
-        
+
        allPacients.push(temp)
      })
     }
     information.rows = allPacients
     return information
-      
+
   }
   console.log(createDicDatatables(pacients))
 
@@ -148,14 +128,52 @@ export default function TabWidget() {
         </Row>
       </CardHeader>
 
-      <MDBDataTable className="m-4"
-      striped
-      bordered
-      hover
-      data={createDicDatatables(pacients)}
-    />
+      <Table className="align-items-center table-flush" responsive>
+        <thead className="thead-light">
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Last meeting date</th>
+            <th scope="col">Anomaly</th>
+            <th scope="col">Anomaly threshold </th>
+            <th scope="col">Patient's profile</th>
+          </tr>
+        </thead>
+        <tbody>
+          {pacients.length ? (
+            pacients.map(pacient => (
+              <tr>
+                <th scope="row"><a href="" onClick={() => PatientRecord(pacient)}> {pacient.name + " " + pacient.lastname}</a></th>
+                <td>{pacient.email}</td>
+                <td>{pacient.lastMeetingDate ? (pacient.lastMeetingDate) : ("None") }</td>
+                <td>
+                  <Anomaly val={pacient.anomaly}></Anomaly>
+                </td>
+                <td> {pacient.anomaly_threshold}%</td>
+                <td>
+                  <Button
+                  onClick={() => PatientProfile(pacient)}
+                  >
+                    Go to profile
+                  </Button>
+                   </td>
+                   <td>
+                  <DeletePatientsModal patientId={pacient.id}></DeletePatientsModal>
+                  </td>
 
-      
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+          )}
+        </tbody>
+      </Table>
     </Card>
     </>
   );
