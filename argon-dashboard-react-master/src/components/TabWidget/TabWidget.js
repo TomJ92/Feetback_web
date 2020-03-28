@@ -332,7 +332,7 @@ export default function TabWidget() {
           console.log(error.message);
           //return "ok4";
         }
-            });
+      });
     };
 
     function PatientProfile(pacient)
