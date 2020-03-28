@@ -73,6 +73,41 @@ export default function TabWidget() {
 
 
   const { pacients = [] } = {pacients: data.getPacients.pacients};
+    const information = {
+    columns: [
+      {
+        label: 'Name',
+        field: 'name',
+        sort: 'asc',
+        width: 150
+      },
+      {
+        label: 'E-mail',
+        field: 'email',
+        sort: 'asc',
+        width: 270
+      },
+      {
+        label: 'Last meeting date',
+        field: 'lastMeetingDate',
+        sort: 'asc',
+        width: 200
+      },
+      {
+        label: 'Anomaly',
+        field: 'anomaly',
+        sort: 'asc',
+        width: 200
+      },
+      {
+        label: 'Options',
+        field: 'options',
+        sort: 'asc',
+        width: 200
+      }
+    ],
+    rows: pacients
+  };
 
   function PatientProfile(pacient)
   {
