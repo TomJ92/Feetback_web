@@ -38,7 +38,7 @@ class Anomaly extends Component {
     if(this.props.val == false)
     {
       return(<div class="alert alert-success" role="alert">
-    <strong>Nothing to report !</strong>
+    <strong>No anomaly to report !</strong>
     </div>);
     }
     else

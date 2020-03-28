@@ -355,7 +355,7 @@ function handleEmailChange(evt){
   <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4 mb-5">
   </CardHeader>
   <CardBody className="pt-0 pt-md-4">
-  
+
   <div className="text-center">
   <h3>
   {info.name} {info.lastname}
@@ -374,7 +374,7 @@ function handleEmailChange(evt){
   </Col>                    
   </Row>
   </CardHeader>
-  
+
   <CardBody>
   <Form /*onSubmit={this.handleSubmit}*/>
   <h6 className="heading-small text-muted mb-4">
@@ -508,7 +508,7 @@ function handleEmailChange(evt){
                         />
                         </FormGroup> 
                         </Col>
-                        
+
                         </Row>
                         </div>
                         </Form>

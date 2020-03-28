@@ -60,7 +60,7 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
 } from "reactstrap";
-
+import Anomaly from "components/Anomaly/Anomaly.js";
 import Header from "components/Headers/Header.jsx";
 import Graph from "components/Graph/Graph.js";
 import MainGraph from "components/Graph/MainGraph.js"
@@ -68,11 +68,10 @@ import MeasuresWidget from "components/TabWidget/MeasuresWidget";
 
 export default function Patient (props){
     const history = useHistory();
-
+    var info = JSON.parse(localStorage.getItem("CURRENT_PATIENT"));
     const [value, setValue] = useState(-1);
     const [show5Graphs, setShow5Graphs] = useState(false);
-
-        console.log("The value is")
+    console.log("The value is")
     console.log(value)
     if(props.location.state==null)
         return(
@@ -92,8 +91,11 @@ export default function Patient (props){
       <Header />
     {/* Page content */}
     <Container className="mt--7" fluid>
-     <Row>
+     <Row className ="text-right">
        <Col></Col>
+       <Col></Col>
+       <Col>
+<Anomaly val={info.anomaly}></Anomaly></Col> 
        <Col className="text-right">
        <Button
     onClick={() => setShow5Graphs(!show5Graphs)}
@@ -101,6 +103,12 @@ export default function Patient (props){
       {(show5Graphs)? "Show main graph": "Show 5 sensors graphs" }
     </Button>
        </Col>
+  <Col><Button
+href="#pablo"
+onClick={e => e.preventDefault()}
+>
+Schedule a meeting
+</Button></Col>
        </Row> 
 
     <Row className="mt-5">

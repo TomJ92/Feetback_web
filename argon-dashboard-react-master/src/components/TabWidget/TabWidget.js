@@ -48,22 +48,8 @@ const PACIENTS_INFO = gql`
         email
         lastMeetingDate
         currentPodiatrist
-      }
-    }
-  }
-`;
-const MEASURES_INFO = gql`
-  query($patient: ID!){
-    getPacients(patient: $patient) {
-      status
-      message
-      pacients {
-        id
-        name
-        lastname
-        email
-        lastMeetingDate
-        currentPodiatrist
+        anomaly
+        anomaly_threshold
       }
     }
   }
@@ -73,7 +59,7 @@ const MEASURES_INFO = gql`
 
 export default function TabWidget() {
   let info = JSON.parse(localStorage.getItem("CURRENT_USER"));
-  console.log(info)
+  console.log(info);
   const { loading, error, data } = useQuery(PACIENTS_INFO, {
     variables: {
       podiatrist: ""+`${info.id}`},
@@ -85,6 +71,20 @@ export default function TabWidget() {
 
 
   const { pacients = [] } = {pacients: data.getPacients.pacients};
+
+  function PatientProfile(pacient)
+  { 
+
+    localStorage.removeItem("CURRENT_PATIENT");
+    localStorage.setItem("CURRENT_PATIENT", JSON.stringify(pacient));
+    history.push("/admin/patientProfile", { patientId: pacient.id, podiatrist: "1", name: pacient.name, lastname: pacient.lastname, lastMeetingDate: pacient.lastMeetingDate, email: pacient.email, anomaly_threshold: pacient.anomaly_threshold})
+  };
+  function PatientRecord(pacient)
+  {
+    history.push("/admin/patient", { pacient: pacient.id });
+    localStorage.removeItem("CURRENT_PATIENT");
+    localStorage.setItem("CURRENT_PATIENT", JSON.stringify(pacient));
+  };
 
   // const history = useHistory()
   // const handleButtonClick = (event) => {
@@ -127,30 +127,32 @@ export default function TabWidget() {
             <th scope="col">E-mail</th>
             <th scope="col">Last meeting date</th>
             <th scope="col">Anomaly</th>
-            <th scope="col"> </th>
-            <th scope="col"> </th>
+            <th scope="col">Anomaly threshold </th>
+            <th scope="col">Patient's profile</th>
           </tr>
         </thead>
         <tbody>
           {pacients.length ? (
             pacients.map(pacient => (
               <tr>
-                <th scope="row"><a href="" onClick={() => history.push("/admin/patient", { pacient: pacient.id })}> {pacient.name + " " + pacient.lastname}</a></th>
+                <th scope="row"><a href="" onClick={() => PatientRecord(pacient)}> {pacient.name + " " + pacient.lastname}</a></th>
                 <td>{pacient.email}</td>
                 <td>{pacient.lastMeetingDate ? (pacient.lastMeetingDate) : ("None") }</td>
                 <td>
-                  <Anomaly val={false}> Last Measure anomaly to put here</Anomaly>
+                  <Anomaly val={pacient.anomaly}></Anomaly>
                 </td>
+                <td> {pacient.anomaly_threshold}%</td>
                 <td>
                   <Button
-                  onClick={() => history.push("/admin/patientProfile", { patientId: pacient.id, podiatrist: "1", name: pacient.name, lastname: pacient.lastname, lastMeetingDate: pacient.lastMeetingDate, email: pacient.email})}
+                  onClick={() => PatientProfile(pacient)}
                   >
                     Go to profile
                   </Button>
-
+                   </td>
+                   <td>
                   <DeletePatientsModal patientId={pacient.id}></DeletePatientsModal>
+                  </td>
 
-                </td>
               </tr>
             ))
           ) : (
