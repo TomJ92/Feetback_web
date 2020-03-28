@@ -52,6 +52,23 @@ const PACIENTS_INFO = gql`
     }
   }
 `;
+const MEASURES_INFO = gql`
+  query($patient: ID!){
+    getPacients(patient: $patient) {
+      status
+      message
+      pacients {
+        id
+        name
+        lastname
+        email
+        lastMeetingDate
+        currentPodiatrist
+      }
+    }
+  }
+`;
+
 
 
 export default function TabWidget() {
