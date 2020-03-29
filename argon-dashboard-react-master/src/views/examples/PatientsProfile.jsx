@@ -20,6 +20,7 @@ import { useQuery, useMutation } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 import { useHistory } from 'react-router-dom';
 import { useState } from "react";
+import sendMail from "../../components/Mail.js"
 
 
 // reactstrap components
@@ -131,6 +132,8 @@ export default function PatientsProfile (props){
             </Row>
             </Container>
     </>);
+    let infoPodiatrist= JSON.parse(localStorage.getItem("CURRENT_USER"));
+    let emailMessage = `Hello ${info.name} ${info.lastname}, your podiatrist ${infoPodiatrist.name} ${infoPodiatrist.lastname} that you last saw on ${info.lastMeetingDate? info.lastMeetingDate: "None"} think that you need to schedule a appointment with him. \n Have a good day, \n\n Feetback application.`
 
     return (
       <>
@@ -167,8 +170,7 @@ export default function PatientsProfile (props){
                     </p>
                     <Button
                       color="default"
-                      href="#pablo"
-                      onClick={e => e.preventDefault()}
+                      onClick={() => sendMail(info.email, infoPodiatrist.email, "Schedule a meeting soon!", emailMessage)}
                       size="sm"
                     >
                       Schedule a meeting

@@ -65,6 +65,7 @@ import Header from "components/Headers/Header.jsx";
 import Graph from "components/Graph/Graph.js";
 import MainGraph from "components/Graph/MainGraph.js"
 import MeasuresWidget from "components/TabWidget/MeasuresWidget";
+import sendMail from "../../components/Mail.js"
 
 export default function Patient (props){
     const history = useHistory();
@@ -74,6 +75,11 @@ export default function Patient (props){
 
         console.log("The value is")
     console.log(value)
+    let infoPodiatrist= JSON.parse(localStorage.getItem("CURRENT_USER"));
+    let info = props.location.state
+
+    let emailMessage = `Hello ${info.name} ${info.lastname}, your podiatrist ${infoPodiatrist.name} ${infoPodiatrist.lastname} that you last saw on ${info.lastMeetingDate? info.lastMeetingDate: "None"} think that you need to schedule a appointment with him. \n Have a good day, \n\n Feetback application.`
+
     if(props.location.state==null)
         return(
         <>
@@ -95,6 +101,16 @@ export default function Patient (props){
      <Row>
        <Col></Col>
        <Col className="text-right">
+
+         
+       <Button
+                      color="default"
+                      onClick={() => sendMail(info.email, infoPodiatrist.email, "Schedule a meeting soon!", emailMessage)}
+                      size="sm"
+                    >
+      Schedule a meeting 
+      </Button>
+
        <Button
     onClick={() => setShow5Graphs(!show5Graphs)}
     >
