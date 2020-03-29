@@ -56,6 +56,76 @@ export default function PatientsProfile (props){
   const [updatePatient] = useMutation(UPDATE_PATIENT);
   var anomaly_threshold = parseInt(info.anomaly_threshold);
   console.log(info);
+  var sensor_1_toggle,sensor_2_toggle,sensor_3_toggle,sensor_4_toggle,sensor_5_toggle = false;
+  console.log(info);
+  if(info.sensor_1_top_position && info.sensor_1_left_position)
+  {
+    var sensor_1_top_position_save = info.sensor_1_top_position;
+    var sensor_1_left_position_save = info.sensor_1_left_position;
+  }
+  else
+  {
+    var sensor_1_left_position_save = 412;  
+    var sensor_1_top_position_save = 454;
+  }
+  if(info.sensor_2_top_position && info.sensor_2_left_position)
+  {
+    var sensor_2_top_position_save = info.sensor_2_top_position;
+    var sensor_2_left_position_save = info.sensor_2_left_position;
+  }
+  else
+  {
+    var sensor_2_left_position_save = 452;  
+    var sensor_2_top_position_save = 454;
+  }
+  if(info.sensor_3_top_position && info.sensor_3_left_position)
+  {
+    var sensor_3_top_position_save = info.sensor_3_top_position;
+    var sensor_3_left_position_save = info.sensor_3_left_position;
+  }
+  else
+  {
+    var sensor_3_left_position_save = 492;  
+    var sensor_3_top_position_save = 454;
+  }
+  if(info.sensor_4_top_position && info.sensor_4_left_position)
+  {
+    var sensor_4_top_position_save = info.sensor_4_top_position;
+    var sensor_4_left_position_save = info.sensor_4_left_position;
+  }
+  else
+  {
+    var sensor_4_left_position_save = 532;  
+    var sensor_4_top_position_save = 454;
+  }
+  if(info.sensor_5_top_position && info.sensor_5_left_position)
+  {
+    var sensor_5_top_position_save = info.sensor_5_top_position;
+    var sensor_5_left_position_save = info.sensor_5_left_position;
+  }
+  else
+  {
+    var sensor_5_left_position_save = 572;  
+    var sensor_5_top_position_save = 454;
+  }
+
+
+  sensor_1_top_position_save += 43.11114501953;
+  sensor_1_left_position_save += 15;
+  sensor_2_top_position_save += 43.11114501953;
+  sensor_2_left_position_save += 15;
+  sensor_3_top_position_save += 43.11114501953;
+  sensor_3_left_position_save += 15;
+  sensor_4_top_position_save += 43.11114501953;
+  sensor_4_left_position_save += 15;
+  sensor_5_top_position_save += 43.11114501953;
+  sensor_5_left_position_save += 15;
+
+
+
+
+
+
   function toggleModal() {
     setExampleModal(!exampleModal);
   }
@@ -80,106 +150,505 @@ export default function PatientsProfile (props){
     return String(value);
   }
 
+  function resetPosition()
+  {
+    if (info.id !==null){
+        toggleModal()
+      }
+      try {
+        updatePatient({
+          variables: {
+            patient: info.id,
+            change: {sensor_1_top_position: 454,
+              sensor_2_top_position : 454,
+              sensor_3_top_position : 454,
+              sensor_4_top_position : 454,
+              sensor_5_top_position : 454,
+              sensor_1_left_position : 412,
+              sensor_2_left_position : 452,
+              sensor_3_left_position : 492,
+              sensor_4_left_position : 532,
+              sensor_5_left_position : 572}
+            }
+          }).then(
+          data => {
+            if (
+              data == undefined ||
+              data.data == undefined ||
+              data.data.updateUser == undefined ||
+              !data.data.updateUser.status
+              ) {
+
+
+              console.log(data.data.updateUser.message);
+
+
+          } else {
+            console.log("donde");
+            console.log(anomaly_threshold);
+            info.sensor_1_top_position = null;
+            info.sensor_2_top_position = null;
+            info.sensor_3_top_position = null;
+            info.sensor_4_top_position = null;
+            info.sensor_5_top_position = null;
+            info.sensor_1_left_position = null;
+            info.sensor_2_left_position = null;
+            info.sensor_3_left_position = null;
+            info.sensor_4_left_position = null;
+            info.sensor_5_left_position = null;
+            localStorage.removeItem("CURRENT_PATIENT");
+            localStorage.setItem("CURRENT_PATIENT", JSON.stringify(info));
+            window.location.reload();
+          }
+        },
+        error => {
+          console.log("error ", error);
+        }
+        );
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
+
     //UPDATE SENSORS POSITION ON THE FOOT
-    function updateSensors()
+    function updateSensors(event)
     {
 
-    }
-    const date_today = getCurrentDateTime();
+      let sensor_1_img = document.getElementById("sensor_1_img");
+      let sensor_2_img = document.getElementById("sensor_2_img");
+      let sensor_3_img = document.getElementById("sensor_3_img");
+      let sensor_4_img = document.getElementById("sensor_4_img");
+      let sensor_5_img = document.getElementById("sensor_5_img");
+      let foot_img = document.getElementById("foot_img");
 
+      console.log(foot_img.getBoundingClientRect().x);
+      console.log(foot_img.getBoundingClientRect().y);
+      console.log(sensor_1_img.getBoundingClientRect().x);
+      console.log(sensor_1_img.getBoundingClientRect().y);
+      console.log(sensor_2_img.getBoundingClientRect().x);
+      console.log(sensor_2_img.getBoundingClientRect().y);
+      console.log(sensor_3_img.getBoundingClientRect().x);
+      console.log(sensor_3_img.getBoundingClientRect().y);
+      console.log(sensor_4_img.getBoundingClientRect().x);
+      console.log(sensor_4_img.getBoundingClientRect().y);
+      console.log(sensor_5_img.getBoundingClientRect().x);
+      console.log(sensor_5_img.getBoundingClientRect().y);
 
-    function changeAnomalyThreshold(patientId){
-if (info.id !==null || patientId==null){
-    toggleModal()
-  }
-  if(anomaly_threshold > 0 && Number.isInteger(anomaly_threshold)){
-  try {
-    updatePatient({
-      variables: {
-        patient: patientId,
-        change: {anomaly_threshold: anomaly_threshold}
+      let sensor_1_top_position = sensor_1_img.getBoundingClientRect().y-foot_img.getBoundingClientRect().y;
+      let sensor_2_top_position = sensor_2_img.getBoundingClientRect().y-foot_img.getBoundingClientRect().y;
+      let sensor_3_top_position = sensor_3_img.getBoundingClientRect().y-foot_img.getBoundingClientRect().y;
+      let sensor_4_top_position = sensor_4_img.getBoundingClientRect().y-foot_img.getBoundingClientRect().y;
+      let sensor_5_top_position = sensor_5_img.getBoundingClientRect().y-foot_img.getBoundingClientRect().y;
+      let sensor_1_left_position = sensor_1_img.getBoundingClientRect().x-foot_img.getBoundingClientRect().x;
+      let sensor_2_left_position = sensor_2_img.getBoundingClientRect().x-foot_img.getBoundingClientRect().x;
+      let sensor_3_left_position = sensor_3_img.getBoundingClientRect().x-foot_img.getBoundingClientRect().x;
+      let sensor_4_left_position = sensor_4_img.getBoundingClientRect().x-foot_img.getBoundingClientRect().x;
+      let sensor_5_left_position = sensor_5_img.getBoundingClientRect().x-foot_img.getBoundingClientRect().x;
+
+      if (info.id !==null){
+        toggleModal()
       }
-    }).then(
-    data => {
-      if (
-        data == undefined ||
-        data.data == undefined ||
-        data.data.updateUser == undefined ||
-        !data.data.updateUser.status
-        ) {
+      try {
+        updatePatient({
+          variables: {
+            patient: info.id,
+            change: {sensor_1_top_position: sensor_1_top_position,
+              sensor_2_top_position : sensor_2_top_position,
+              sensor_3_top_position : sensor_3_top_position,
+              sensor_4_top_position : sensor_4_top_position,
+              sensor_5_top_position : sensor_5_top_position,
+              sensor_1_left_position : sensor_1_left_position,
+              sensor_2_left_position : sensor_2_left_position,
+              sensor_3_left_position : sensor_3_left_position,
+              sensor_4_left_position : sensor_4_left_position,
+              sensor_5_left_position : sensor_5_left_position}
+            }
+          }).then(
+          data => {
+            if (
+              data == undefined ||
+              data.data == undefined ||
+              data.data.updateUser == undefined ||
+              !data.data.updateUser.status
+              ) {
 
 
-        console.log(data.data.updateUser.message);
+              console.log(data.data.updateUser.message);
 
 
-    } else {
-      console.log("donde");
-      console.log(anomaly_threshold);
-      info.anomaly_threshold = anomaly_threshold.toString();
-      localStorage.removeItem("CURRENT_PATIENT");
-      localStorage.setItem("CURRENT_PATIENT", JSON.stringify(info));
-      window.location.reload();
-    }
-  },
-  error => {
-    console.log("error ", error);
+          } else {
+            console.log("donde");
+            console.log(anomaly_threshold);
+            info.sensor_1_top_position = sensor_1_top_position;
+            info.sensor_2_top_position = sensor_2_top_position;
+            info.sensor_3_top_position = sensor_3_top_position;
+            info.sensor_4_top_position = sensor_4_top_position;
+            info.sensor_5_top_position = sensor_5_top_position;
+            info.sensor_1_left_position = sensor_1_left_position;
+            info.sensor_2_left_position = sensor_2_left_position;
+            info.sensor_3_left_position = sensor_3_left_position;
+            info.sensor_4_left_position = sensor_4_left_position;
+            info.sensor_5_left_position = sensor_5_left_position;
+            localStorage.removeItem("CURRENT_PATIENT");
+            localStorage.setItem("CURRENT_PATIENT", JSON.stringify(info));
+            window.location.reload();
+          }
+        },
+        error => {
+          console.log("error ", error);
+        }
+        );
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
+
+
+      const date_today = getCurrentDateTime();
+
+
+      function changeAnomalyThreshold(patientId){
+        if (info.id !==null || patientId==null){
+          toggleModal()
+        }
+        if(anomaly_threshold > 0 && Number.isInteger(anomaly_threshold)){
+          try {
+            updatePatient({
+              variables: {
+                patient: patientId,
+                change: {anomaly_threshold: anomaly_threshold}
+              }
+            }).then(
+            data => {
+              if (
+                data == undefined ||
+                data.data == undefined ||
+                data.data.updateUser == undefined ||
+                !data.data.updateUser.status
+                ) {
+
+
+                console.log(data.data.updateUser.message);
+
+
+            } else {
+              console.log("donde");
+              console.log(anomaly_threshold);
+              info.anomaly_threshold = anomaly_threshold.toString();
+              localStorage.removeItem("CURRENT_PATIENT");
+              localStorage.setItem("CURRENT_PATIENT", JSON.stringify(info));
+              window.location.reload();
+            }
+          },
+          error => {
+            console.log("error ", error);
+          }
+          );
+          } catch (error) {
+            console.log(error.message);
+          }
+        }
+      };
+
+
+      function handleChangeAnomalyThreshold(evt){
+        anomaly_threshold = parseInt(evt.target.value);
+        console.log("anomaly_threshold  change");
+        console.log(anomaly_threshold);
+      };
+
+
+      function updateToday(patientId){
+        if (info.id !==null || patientId==null){
+          toggleModal()
+        }
+        try {
+          updatePatient({
+            variables: {
+              patient: patientId,
+              change: {lastMeetingDate: date_today}
+            }
+          }).then(
+          data => {
+            if (
+              data == undefined ||
+              data.data == undefined ||
+              data.data.updateUser == undefined ||
+              !data.data.updateUser.status
+              ) {
+
+
+              console.log(data.data.updateUser.message);
+
+
+          } else {
+            console.log("donde");
+            console.log(date_today);
+            info.lastMeetingDate = date_today;
+            localStorage.removeItem("CURRENT_PATIENT");
+            localStorage.setItem("CURRENT_PATIENT", JSON.stringify(info));
+            window.location.reload();
+          }
+        },
+        error => {
+          console.log("error ", error);
+        }
+        );
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
+      console.log(info);
+//let ball = document.getElementById("sensor_1_img");
+//ball.onmousedown = move_sensor_1(window.event);
+
+function move_sensor_1(event) { // (1) start the process
+
+  sensor_1_toggle = !sensor_1_toggle;
+  if(sensor_1_toggle){
+    let ball = document.getElementById("sensor_1_img");
+  // (2) prepare to moving: make absolute and on top by z-index
+
+  ball.style.position = 'absolute';
+  ball.style.zIndex = 1000;
+  document.body.append(ball);
+
+  moveAt(event.pageX, event.pageY);
+  console.log("OK MOVE");
+
+  // moves the ball at (pageX, pageY) coordinates
+  // taking initial shifts into account
+  function moveAt(pageX, pageY) {
+    ball.style.left = pageX - ball.offsetWidth / 2 + 'px';
+    ball.style.top = pageY - ball.offsetHeight / 2 + 'px';
   }
-  );
-  } catch (error) {
-    console.log(error.message);
+
+  function onMouseMove(event) {
+    moveAt(event.pageX, event.pageY);
+    console.log("OKKKK");
   }
+
+  // move the ball on mousemove
+  ball.addEventListener('mousemove', onMouseMove);
+
+  // drop the ball, remove unneeded handlers
+  ball.onmouseup = function() {
+    ball.removeEventListener('mousemove', onMouseMove);
+    ball.onmouseup = null;
+  };
+}
+};
+
+/*function move_sensor_1(event)
+{
+  var e = window.event;
+
+    var posX = e.clientX;
+    var posY = e.clientY;
+
+  let ball = document.getElementById("sensor_1_img");
+  // (2) prepare to moving: make absolute and on top by z-index
+  ball.style.position = 'absolute';
+  ball.style.zIndex = 1000;
+  // move it out of any current parents directly into body
+  // to make it positioned relative to the body
+  document.body.append(ball);
+  // ...and put that absolutely positioned ball under the pointer
+
+  moveAt(posX, posY);
+  console.log("MOUSEEE");
+  console.log(MouseEvent);
+
+  // centers the ball at (pageX, pageY) coordinates
+  function moveAt(pageX, pageY) {
+    ball.style.left = pageX - ball.offsetWidth / 2 + 'px';
+    ball.style.top = pageY - ball.offsetHeight / 2 + 'px';
+  }
+
+  ball.onmousemove = function(event) {
+    moveAt(posX, posY);
+  }
+
+  // (3) move the ball on mousemove
+  //document.addEventListener('mousemove', onMouseMove);
+
+  // (4) drop the ball, remove unneeded handlers
+  ball.onmouseup = function() {
+    ball.onmousemove=null;
+    //document.removeEventListener('mousemove', onMouseMove);
+    ball.onmouseup = null;
+  };
+  console.log(ball);
+  /*sensor_1_toggle = !sensor_1_toggle;
+  let e = document.getElementById("sensor_1_img");
+  //while(sensor_1_toggle)
+  //{
+  console.log(e.style.left);
+  e.style.left= 10;
+  e.style.top = 10;
+  //if(MouseEvent.click)
+  //{
+    sensor_1_toggle = false;
+  //}
+  //}
+  //let radius = e.height() /2;
+
+};
+*/
+function stop_move_sensor_1()
+{
+
+  sensor_1_toggle = !sensor_1_toggle;
+};
+function move_sensor_2(event)
+{
+  sensor_2_toggle = !sensor_2_toggle;
+  if(sensor_2_toggle){
+    let ball = document.getElementById("sensor_2_img");
+  // (2) prepare to moving: make absolute and on top by z-index
+
+  ball.style.position = 'absolute';
+  ball.style.zIndex = 1000;
+  document.body.append(ball);
+
+  moveAt(event.pageX, event.pageY);
+  console.log("OK MOVE");
+
+  // moves the ball at (pageX, pageY) coordinates
+  // taking initial shifts into account
+  function moveAt(pageX, pageY) {
+    ball.style.left = pageX - ball.offsetWidth / 2 + 'px';
+    ball.style.top = pageY - ball.offsetHeight / 2 + 'px';
+  }
+
+  function onMouseMove(event) {
+    moveAt(event.pageX, event.pageY);
+    console.log("OKKKK");
+  }
+
+  // move the ball on mousemove
+  ball.addEventListener('mousemove', onMouseMove);
+
+  // drop the ball, remove unneeded handlers
+  ball.onmouseup = function() {
+    ball.removeEventListener('mousemove', onMouseMove);
+    ball.onmouseup = null;
+  };
+}
+};
+function move_sensor_3(event)
+{
+  sensor_3_toggle = !sensor_3_toggle;
+  if(sensor_3_toggle){
+    let ball = document.getElementById("sensor_3_img");
+  // (2) prepare to moving: make absolute and on top by z-index
+
+  ball.style.position = 'absolute';
+  ball.style.zIndex = 1000;
+  document.body.append(ball);
+
+  moveAt(event.pageX, event.pageY);
+  console.log("OK MOVE");
+
+  // moves the ball at (pageX, pageY) coordinates
+  // taking initial shifts into account
+  function moveAt(pageX, pageY) {
+    ball.style.left = pageX - ball.offsetWidth / 2 + 'px';
+    ball.style.top = pageY - ball.offsetHeight / 2 + 'px';
+  }
+
+  function onMouseMove(event) {
+    moveAt(event.pageX, event.pageY);
+    console.log("OKKKK");
+  }
+
+  // move the ball on mousemove
+  ball.addEventListener('mousemove', onMouseMove);
+
+  // drop the ball, remove unneeded handlers
+  ball.onmouseup = function() {
+    ball.removeEventListener('mousemove', onMouseMove);
+    ball.onmouseup = null;
+  };
+}
+};
+function move_sensor_4(event)
+{
+  sensor_4_toggle = !sensor_4_toggle;
+  if(sensor_4_toggle){
+    let ball = document.getElementById("sensor_4_img");
+  // (2) prepare to moving: make absolute and on top by z-index
+
+  ball.style.position = 'absolute';
+  ball.style.zIndex = 1000;
+  document.body.append(ball);
+
+  moveAt(event.pageX, event.pageY);
+  console.log("OK MOVE");
+
+  // moves the ball at (pageX, pageY) coordinates
+  // taking initial shifts into account
+  function moveAt(pageX, pageY) {
+    ball.style.left = pageX - ball.offsetWidth / 2 + 'px';
+    ball.style.top = pageY - ball.offsetHeight / 2 + 'px';
+  }
+
+  function onMouseMove(event) {
+    moveAt(event.pageX, event.pageY);
+    console.log("OKKKK");
+  }
+
+  // move the ball on mousemove
+  ball.addEventListener('mousemove', onMouseMove);
+
+  // drop the ball, remove unneeded handlers
+  ball.onmouseup = function() {
+    ball.removeEventListener('mousemove', onMouseMove);
+    ball.onmouseup = null;
+  };
+}
+};
+function move_sensor_5(event)
+{
+  sensor_5_toggle = !sensor_5_toggle;
+  if(sensor_5_toggle){
+    let ball = document.getElementById("sensor_5_img");
+  // (2) prepare to moving: make absolute and on top by z-index
+
+  ball.style.position = 'absolute';
+  ball.style.zIndex = 1000;
+  document.body.append(ball);
+
+  moveAt(event.pageX, event.pageY);
+  console.log("OK MOVE");
+
+  // moves the ball at (pageX, pageY) coordinates
+  // taking initial shifts into account
+  function moveAt(pageX, pageY) {
+    ball.style.left = pageX - ball.offsetWidth / 2 + 'px';
+    ball.style.top = pageY - ball.offsetHeight / 2 + 'px';
+  }
+
+  function onMouseMove(event) {
+    moveAt(event.pageX, event.pageY);
+    console.log("OKKKK");
+  }
+
+  // move the ball on mousemove
+  ball.addEventListener('mousemove', onMouseMove);
+
+  // drop the ball, remove unneeded handlers
+  ball.onmouseup = function() {
+    ball.removeEventListener('mousemove', onMouseMove);
+    ball.onmouseup = null;
+  };
 }
 };
 
 
-function handleChangeAnomalyThreshold(evt){
-    anomaly_threshold = parseInt(evt.target.value);
-    console.log("anomaly_threshold  change");
-    console.log(anomaly_threshold);
-};
 
 
-function updateToday(patientId){
-  if (info.id !==null || patientId==null){
-    toggleModal()
-  }
-  try {
-    updatePatient({
-      variables: {
-        patient: patientId,
-        change: {lastMeetingDate: date_today}
-      }
-    }).then(
-    data => {
-      if (
-        data == undefined ||
-        data.data == undefined ||
-        data.data.updateUser == undefined ||
-        !data.data.updateUser.status
-        ) {
 
-
-        console.log(data.data.updateUser.message);
-
-
-    } else {
-      console.log("donde");
-      console.log(date_today);
-      info.lastMeetingDate = date_today;
-      localStorage.removeItem("CURRENT_PATIENT");
-      localStorage.setItem("CURRENT_PATIENT", JSON.stringify(info));
-      window.location.reload();
-    }
-  },
-  error => {
-    console.log("error ", error);
-  }
-  );
-  } catch (error) {
-    console.log(error.message);
-  }
-};
-console.log(info)
 if(info == undefined || info.currentPodiatrist == undefined || info.id == undefined)
   return (<> 
 
@@ -320,47 +789,68 @@ Change anomaly threshold
 <p>Put on the foot mapping the sensors position</p>
 <div>
 <img
+id="foot_img"
 alt="foot_mapping"
 src={require("assets/img/theme/foot.png")}
 class="position-sticky w-50 p-3"
 />
 <img
+id ="sensor_1_img"
 alt="foot_mapping"
 src={require("assets/img/theme/circle-1.png")}
-class="position-relative"
+draggable="true"
+onClick = {move_sensor_1}
+style = {{position : "absolute", top: (sensor_1_top_position_save).toString()+"px" , left: (sensor_1_left_position_save).toString()+"px"}}
+//onClick =  {()=>stop_move_sensor_1()}
 width="40em"
 height="40em"
+//onClick = {move_sensor_1()}
 />
 <img
+id ="sensor_2_img"
 alt="foot_mapping"
 src={require("assets/img/theme/circle-2.png")}
 class="inner-image"
+style = {{position : "absolute", top: (sensor_2_top_position_save).toString()+"px" , left: (sensor_2_left_position_save).toString()+"px"}}
 width="40em"
 height="40em"
+onClick = {move_sensor_2}
 />
 <img
+id ="sensor_3_img"
 alt="foot_mapping"
 src={require("assets/img/theme/circle-3.png")}
 class="inner-image"
 width="40em"
 height="40em"
+onClick = {move_sensor_3}
+style = {{position : "absolute", top: (sensor_3_top_position_save).toString()+"px" , left: (sensor_3_left_position_save).toString()+"px"}}
+
 />
 <img
+id ="sensor_4_img"
 alt="foot_mapping"
 src={require("assets/img/theme/circle-4.png")}
 class="inner-image"
 width="40em"
 height="40em"
+onClick = {move_sensor_4}
+style = {{position : "absolute", top: (sensor_4_top_position_save).toString()+"px" , left: (sensor_4_left_position_save).toString()+"px"}}
+
 />
 <img
+id ="sensor_5_img"
 alt="foot_mapping"
 src={require("assets/img/theme/circle-5.png")}
 class="inner-image"
 width="40em"
 height="40em"
+onClick = {move_sensor_5}
+style = {{position : "absolute", top: (sensor_5_top_position_save).toString()+"px" , left: (sensor_5_left_position_save).toString()+"px"}}
+
 />
 </div>
-<table cellpadding="10em">
+<table cellPadding="10em">
 <tbody>
 <tr>
 <td><Button
@@ -373,9 +863,9 @@ Save sensors location
 <td><Button
 className="mt-4"
 color="primary"
-onClick={() => updateSensors(info.patientId)}
+onClick = {() => resetPosition()}
 >
-Change foot mapping image
+Reset position
 </Button></td>
 </tr>
 </tbody>
@@ -393,6 +883,9 @@ Change foot mapping image
 </Container>
 </>
 );
+  //document.getElementById("sensor_1_img").style.top
+  //var sensor_1_position_element = 
+
 }
 
 

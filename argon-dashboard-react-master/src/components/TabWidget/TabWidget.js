@@ -53,6 +53,16 @@ query($podiatrist: ID!){
       currentPodiatrist
       anomaly
       anomaly_threshold
+      sensor_1_top_position
+      sensor_2_top_position
+      sensor_3_top_position
+      sensor_4_top_position 
+      sensor_5_top_position
+      sensor_1_left_position 
+      sensor_2_left_position 
+      sensor_3_left_position 
+      sensor_4_left_position 
+      sensor_5_left_position 
     }
   }
 }
