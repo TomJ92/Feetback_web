@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { useState } from 'react';
 import { useQuery } from "@apollo/react-hooks";
+import { MDBDataTable } from "mdbreact";
 import { gql } from "apollo-boost";
 import {
   LineChart,
@@ -41,76 +42,152 @@ export default function MeasuresWidget(props) {
  const { measures = [] } = {measures: data.getMeasures};
 console.log("hello")
  console.log(data);
+     const information = {
+      columns: [
+      {
+        label: "Date",
+        field: "date",
+        sort: "asc",
+        width: 270
+      },
+      {
+        label: "Duration",
+        field: "duration",
+        sort: "asc",
+        width: 150
+      },
+      {
+        label: "Average pressure 1",
+        field: "sensor_1_average",
+        sort: "asc",
+        width: 200
+      },
+      {
+        label: "Minimum pressure 1",
+        field: "sensor_1_min",
+        sort: "asc",
+        width: 200
+      },
+      {
+        label: "Maximum pressure 1",
+        field :"sensor_1_max",
+        sort: "asc",
+        width : 200
+      },
+      {
+        label: "Average pressure 2",
+        field: "sensor_2_average",
+        sort: "asc",
+        width: 200
+      },
+      {
+        label: "Minimum pressure 2",
+        field: "sensor_2_min",
+        sort: "asc",
+        width: 200
+      },
+      {
+        label: "Maximum pressure 2",
+        field :"sensor_2_max",
+        sort: "asc",
+        width : 200
+      },
+      {
+        label: "Average pressure 3",
+        field: "sensor_3_average",
+        sort: "asc",
+        width: 200
+      },
+      {
+        label: "Minimum pressure 3",
+        field: "sensor_3_min",
+        sort: "asc",
+        width: 200
+      },
+      {
+        label: "Maximum pressure 3",
+        field :"sensor_3_max",
+        sort: "asc",
+        width : 200
+      },
+      {
+        label: "Average pressure 4",
+        field: "sensor_4_average",
+        sort: "asc",
+        width: 200
+      },
+      {
+        label: "Minimum pressure 4",
+        field: "sensor_4_min",
+        sort: "asc",
+        width: 200
+      },
+      {
+        label: "Maximum pressure 4",
+        field :"sensor_4_max",
+        sort: "asc",
+        width : 200
+      },
+      {
+        label: "Average pressure 5",
+        field: "sensor_5_average",
+        sort: "asc",
+        width: 200
+      },
+      {
+        label: "Minimum pressure 5",
+        field: "sensor_5_min",
+        sort: "asc",
+        width: 200
+      },
+      {
+        label: "Maximum pressure 5",
+        field :"sensor_5_max",
+        sort: "asc",
+        width : 200
+      }
+      ],
+      rows: measures
+    };
 
+    function createDicDatatables(data) {
+    var allMeasures = []
+    if(data.length){
+      data.map(measure=> {
+        var temp = {}
+        temp["date"] = measure.date
+        temp["duration"] = measure.duration ? (measure.duration) : ("None specified")
+        temp["sensor_1_average"] = measure.sensors[0].averagePressureS
+        temp["sensor_1_min"] = measure.sensors[0].minPressureS
+        temp["sensor_1_max"]= measure.sensors[0].maxPressureS
+        temp["sensor_2_average"] = measure.sensors[1].averagePressureS
+        temp["sensor_2_min"] = measure.sensors[1].minPressureS
+        temp["sensor_2_max"]= measure.sensors[1].maxPressureS
+        temp["sensor_3_average"] = measure.sensors[2].averagePressureS
+        temp["sensor_3_min"] = measure.sensors[2].minPressureS
+        temp["sensor_3_max"]= measure.sensors[2].maxPressureS
+        temp["sensor_4_average"] = measure.sensors[3].averagePressureS
+        temp["sensor_4_min"] = measure.sensors[3].minPressureS
+        temp["sensor_4_max"]= measure.sensors[3].maxPressureS
+        temp["sensor_5_average"] = measure.sensors[4].averagePressureS
+        temp["sensor_5_min"] = measure.sensors[4].minPressureS
+        temp["sensor_5_max"]= measure.sensors[4].maxPressureS
+
+        allMeasures.push(temp)
+      })
+    }
+    information.rows = allMeasures
+    return information
+
+  };
   return (
-    <Table className="align-items-center table-flush" responsive>
-        <thead className="thead-light">
-          <tr>
-             <th scope="col">Date</th>
-              <th scope="col">Duration (min)</th>
-              <th scope="col">Average pressure 1</th>
-              <th scope="col">Minimum pressure 1</th>
-              <th scope="col">Maximum pressure 1</th>
-              <th scope="col">Average pressure 2</th>
-              <th scope="col">Minimum pressure 2</th>
-              <th scope="col">Maximum pressure 2</th>
-              <th scope="col">Average pressure 3</th>
-              <th scope="col">Minimum pressure 3</th>
-              <th scope="col">Maximum pressure 3</th>
-              <th scope="col">Average pressure 4</th>
-              <th scope="col">Minimum pressure 4</th>
-              <th scope="col">Maximum pressure 4</th>
-              <th scope="col">Average pressure 5</th>
-              <th scope="col">Minimum pressure 5</th>
-              <th scope="col">Maximum pressure 5</th>
-          </tr>
-        </thead>
-        <tbody>
-          {measures.length ? (
-            measures.map(measure => (
-              <tr>
-                <th scope="row">{measure.date}</th>
-                <td>{measure.duration ? (measure.duration) : ("None specified") }</td>
-                <td>{measure.sensors[0].averagePressureS}</td>
-                <td>{measure.sensors[0].minPressureS}</td>
-                <td>{measure.sensors[0].maxPressureS}</td>
-                <td>{measure.sensors[1].averagePressureS}</td>
-                <td>{measure.sensors[1].minPressureS}</td>
-                <td>{measure.sensors[1].maxPressureS}</td>
-                <td>{measure.sensors[2].averagePressureS}</td>
-                <td>{measure.sensors[2].minPressureS}</td>
-                <td>{measure.sensors[2].maxPressureS}</td>
-                <td>{measure.sensors[3].averagePressureS}</td>
-                <td>{measure.sensors[3].minPressureS}</td>
-                <td>{measure.sensors[3].maxPressureS}</td>
-                <td>{measure.sensors[4].averagePressureS}</td>
-                <td>{measure.sensors[4].minPressureS}</td>
-                <td>{measure.sensors[4].maxPressureS}</td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td>NO DATA</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-              <td>-</td>
-            </tr>
-          )}
-        </tbody>
-      </Table>
+    <MDBDataTable responsive
+          className="m-4"
+          striped
+          bordered
+          hover
+          data={createDicDatatables(measures)}
+        />
   );
 }
 

@@ -8,6 +8,8 @@ import { useQuery, useMutation } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 import { useHistory } from "react-router-dom";
 import { MDBDataTable } from "mdbreact";
+import sendMail from "components/Mail.js"
+
 
 // reactstrap components
 import {
@@ -133,6 +135,12 @@ export default function TabWidget() {
         width: 200
       },
       {
+        label: "Anomaly threshold",
+        field :"anomaly_threshold",
+        sort: "asc",
+        width : 200
+      },
+      {
         label: "Options",
         field: "options",
         sort: "asc",
@@ -196,7 +204,7 @@ export default function TabWidget() {
     }
     function anomaly_check(){
       pacients.map(pacient => {
-        console.log("anomaly_check patient")
+        console.log("anomaly_check patient");
         console.log(pacient);
         console.log(pacient.id);
         let count_anomaly = 0;
@@ -318,6 +326,8 @@ export default function TabWidget() {
               {
                 changeAnomaly(pacient.id, true);
                 console.log("ANOMALIE!");
+                let emailMessage = `Hello ${pacient.name} ${pacient.lastname}, your podiatrist ${info.name} ${info.lastname} that you last saw on ${pacient.lastMeetingDate? pacient.lastMeetingDate: "None"} think that you need to schedule a appointment with him. \n Have a good day, \n\n Feetback application.`;
+                sendMail(pacient.email, info.email, "Schedule a meeting soon!", emailMessage);
               }
               //In the other case, the user anomaly field is false
               else
@@ -327,6 +337,7 @@ export default function TabWidget() {
               }
             }
           }
+          window.location.reload();
         },
         error => {
           console.log("ERROR DATA getSensorsData")
@@ -370,6 +381,7 @@ export default function TabWidget() {
         temp["email"] = pacient.email
         temp["lastMeetingDate"] = pacient.lastMeetingDate ? (pacient.lastMeetingDate) : ("None")
         temp["anomaly"] = <Anomaly val={pacient.anomaly}> Last Measure anomaly to put here</Anomaly>
+        temp["anomaly_threshold"]= <>{pacient.anomaly_threshold} % </>
         temp["options"] = <><Button onClick={() => PatientProfile(pacient)}>Go to profile</Button> <DeletePatientsModal patientId={pacient.id}></DeletePatientsModal></>
 
         allPacients.push(temp)
@@ -391,11 +403,14 @@ export default function TabWidget() {
             </div>
             <Col>
               <PatientsModal></PatientsModal>
+              <Button color="primary" type="button" onClick={() => anomaly_check()}>
+        Check for anomalies
+      </Button>
             </Col>
           </Row>
         </CardHeader>
 
-        <MDBDataTable
+        <MDBDataTable responsive
           className="m-4"
           striped
           bordered
