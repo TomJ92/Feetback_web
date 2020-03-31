@@ -6,11 +6,8 @@ import Chart from "chart.js";
 // react plugin used to create charts
 import { useQuery, useMutation } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
-import { useHistory } from 'react-router-dom';
-import { MDBDataTable } from 'mdbreact';
-
-
-
+import { useHistory } from "react-router-dom";
+import { MDBDataTable } from "mdbreact";
 
 // reactstrap components
 import {
@@ -34,8 +31,8 @@ import {
 } from "reactstrap";
 
 import Anomaly from "components/Anomaly/Anomaly.js";
-import PatientsModal from "components/Modals/PatientsModal.js"
-import DeletePatientsModal from "components/Modals/DeletePatientsModal.js"
+import PatientsModal from "components/Modals/PatientsModal.js";
+import DeletePatientsModal from "components/Modals/DeletePatientsModal.js";
 import { Redirect } from "react-router";
 import { useState } from "react";
 
@@ -56,13 +53,13 @@ query($podiatrist: ID!){
       sensor_1_top_position
       sensor_2_top_position
       sensor_3_top_position
-      sensor_4_top_position 
+      sensor_4_top_position
       sensor_5_top_position
-      sensor_1_left_position 
-      sensor_2_left_position 
-      sensor_3_left_position 
-      sensor_4_left_position 
-      sensor_5_left_position 
+      sensor_1_left_position
+      sensor_2_left_position
+      sensor_3_left_position
+      sensor_4_left_position
+      sensor_5_left_position
     }
   }
 }
@@ -105,40 +102,40 @@ export default function TabWidget() {
   const [getMeasures_data] = useMutation(SENSOR_DATA);
 
   if (loading) return <p>Loading...</p>;
-  if (error || data.status==false) return <p>Error :(</p>;
+  if (error || data.status == false) return <p>Error :(</p>;
 
 
     const { pacients = [] } = {pacients: data.getPacients.pacients};
     const information = {
       columns: [
       {
-        label: 'Name',
-        field: 'name',
-        sort: 'asc',
+        label: "Name",
+        field: "name",
+        sort: "asc",
         width: 150
       },
       {
-        label: 'E-mail',
-        field: 'email',
-        sort: 'asc',
+        label: "E-mail",
+        field: "email",
+        sort: "asc",
         width: 270
       },
       {
-        label: 'Last meeting date',
-        field: 'lastMeetingDate',
-        sort: 'asc',
+        label: "Last meeting date",
+        field: "lastMeetingDate",
+        sort: "asc",
         width: 200
       },
       {
-        label: 'Anomaly',
-        field: 'anomaly',
-        sort: 'asc',
+        label: "Anomaly",
+        field: "anomaly",
+        sort: "asc",
         width: 200
       },
       {
-        label: 'Options',
-        field: 'options',
-        sort: 'asc',
+        label: "Options",
+        field: "options",
+        sort: "asc",
         width: 200
       }
       ],
@@ -268,7 +265,7 @@ export default function TabWidget() {
 
               ///Perform the following formula for each sensor to know the percentage difference : Math.sqrt(square((first measure - last measure)/first measure)*100))
 
-              
+
 
               //For each sensor, create a boolean that is true if the formula is equal or larger than the anomaly threshold
 
@@ -385,70 +382,27 @@ export default function TabWidget() {
   console.log(createDicDatatables(pacients));
 
   return (
-  <>
-  <Card className="shadow">
-  <CardHeader className="border-0">
-  <Row className="align-items-center">
-  <div className="col">
-  <h3 className="mb-0">List of patients</h3>
-  </div>
-  <Col>
-  <PatientsModal></PatientsModal>
-  <Button color="primary" type="button" onClick={() => anomaly_check()}>
-        Check for anomalies
-      </Button>
+    <>
+      <Card className="shadow">
+        <CardHeader className="border-0">
+          <Row className="align-items-center">
+            <div className="col">
+              <h3 className="mb-0">List of patients</h3>
+            </div>
+            <Col>
+              <PatientsModal></PatientsModal>
+            </Col>
+          </Row>
+        </CardHeader>
 
-  </Col>
-  </Row>
-  </CardHeader>
-
-  <Table className="align-items-center table-flush" responsive>
-  <thead className="thead-light">
-  <tr>
-  <th scope="col">Name</th>
-  <th scope="col">E-mail</th>
-  <th scope="col">Last meeting date</th>
-  <th scope="col">Anomaly</th>
-  <th scope="col">Anomaly threshold </th>
-  <th scope="col">Patient's profile</th>
-  </tr>
-  </thead>
-  <tbody>
-  {pacients.length ? (
-    pacients.map(pacient => (
-    <tr>
-    <th scope="row"><a href="" onClick={() => PatientRecord(pacient)}> {pacient.name + " " + pacient.lastname}</a></th>
-    <td>{pacient.email}</td>
-    <td>{pacient.lastMeetingDate ? (pacient.lastMeetingDate) : ("None") }</td>
-    <td>
-    <Anomaly val={pacient.anomaly}></Anomaly>
-    </td>
-    <td> {pacient.anomaly_threshold}%</td>
-    <td>
-    <Button
-    onClick={() => PatientProfile(pacient)}
-    >
-    Go to profile
-    </Button>
-    </td>
-    <td>
-    <DeletePatientsModal patientId={pacient.id}></DeletePatientsModal>
-    </td>
-
-    </tr>
-    ))
-    ) : (
-    <tr>
-    <td>-</td>
-    <td>-</td>
-    <td>-</td>
-    <td>-</td>
-    <td>-</td>
-    </tr>
-    )}
-    </tbody>
-    </Table>
-    </Card>
+        <MDBDataTable
+          className="m-4"
+          striped
+          bordered
+          hover
+          data={createDicDatatables(pacients)}
+        />
+      </Card>
     </>
     );
   }

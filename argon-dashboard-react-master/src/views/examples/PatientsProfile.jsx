@@ -20,6 +20,7 @@ import { useQuery, useMutation } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 import { useHistory } from 'react-router-dom';
 import { useState } from "react";
+import sendMail from "../../components/Mail.js"
 
 
 // reactstrap components
@@ -65,7 +66,7 @@ export default function PatientsProfile (props){
   }
   else
   {
-    var sensor_1_left_position_save = 412;  
+    var sensor_1_left_position_save = 412;
     var sensor_1_top_position_save = 454;
   }
   if(info.sensor_2_top_position && info.sensor_2_left_position)
@@ -75,7 +76,7 @@ export default function PatientsProfile (props){
   }
   else
   {
-    var sensor_2_left_position_save = 452;  
+    var sensor_2_left_position_save = 452;
     var sensor_2_top_position_save = 454;
   }
   if(info.sensor_3_top_position && info.sensor_3_left_position)
@@ -85,7 +86,7 @@ export default function PatientsProfile (props){
   }
   else
   {
-    var sensor_3_left_position_save = 492;  
+    var sensor_3_left_position_save = 492;
     var sensor_3_top_position_save = 454;
   }
   if(info.sensor_4_top_position && info.sensor_4_left_position)
@@ -95,7 +96,7 @@ export default function PatientsProfile (props){
   }
   else
   {
-    var sensor_4_left_position_save = 532;  
+    var sensor_4_left_position_save = 532;
     var sensor_4_top_position_save = 454;
   }
   if(info.sensor_5_top_position && info.sensor_5_left_position)
@@ -105,7 +106,7 @@ export default function PatientsProfile (props){
   }
   else
   {
-    var sensor_5_left_position_save = 572;  
+    var sensor_5_left_position_save = 572;
     var sensor_5_top_position_save = 454;
   }
 
@@ -650,7 +651,7 @@ function move_sensor_5(event)
 
 
 if(info == undefined || info.currentPodiatrist == undefined || info.id == undefined)
-  return (<> 
+  return (<>
 
     <UserHeader title={"Error while loading info, go back to dashboard"} />
   {/* Page content */}
@@ -661,7 +662,8 @@ if(info == undefined || info.currentPodiatrist == undefined || info.id == undefi
   </Row>
   </Container>
   </>);
-
+  let infoPodiatrist= JSON.parse(localStorage.getItem("CURRENT_USER"));
+  let emailMessage = `Hello ${info.name} ${info.lastname}, your podiatrist ${infoPodiatrist.name} ${infoPodiatrist.lastname} that you last saw on ${info.lastMeetingDate? info.lastMeetingDate: "None"} think that you need to schedule a appointment with him. \n Have a good day, \n\n Feetback application.`;
   return (
   <>
   <UserHeader title={`Welcome to ${info.name} ${info.lastname}  profile`} body={"Here you can register the last meeting for your patient and change the sensors' position on his foot.  "} />
@@ -702,8 +704,7 @@ Anomaly
 </p>
 <Button
 color="default"
-href="#pablo"
-onClick={e => e.preventDefault()}
+onClick={() => sendMail(info.email, infoPodiatrist.email, "Schedule a meeting soon!", emailMessage)}
 size="sm"
 >
 Schedule a meeting
@@ -884,8 +885,6 @@ Reset position
 </>
 );
   //document.getElementById("sensor_1_img").style.top
-  //var sensor_1_position_element = 
+  //var sensor_1_position_element =
 
 }
-
-
