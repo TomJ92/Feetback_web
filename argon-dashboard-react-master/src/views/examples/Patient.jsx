@@ -75,7 +75,6 @@ export default function Patient (props){
     console.log("The value is")
     console.log(value)
     let infoPodiatrist= JSON.parse(localStorage.getItem("CURRENT_USER"));
-    let info = props.location.state
 
     let emailMessage = `Hello ${info.name} ${info.lastname}, your podiatrist ${infoPodiatrist.name} ${infoPodiatrist.lastname} that you last saw on ${info.lastMeetingDate? info.lastMeetingDate: "None"} think that you need to schedule a appointment with him. \n Have a good day, \n\n Feetback application.`
 
