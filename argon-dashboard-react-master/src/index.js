@@ -34,7 +34,7 @@ import { render } from 'react-dom';
 import { ApolloProvider } from '@apollo/react-hooks';
 
 
-const graphQLServerURL = 'http://localhost:4000'
+const graphQLServerURL = 'https://ppe-feetback.herokuapp.com'
 
 const getToken = () => {
   const token = localStorage.getItem('TOKEN');
