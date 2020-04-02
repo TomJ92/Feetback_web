@@ -52,7 +52,6 @@ const client = new ApolloClient({
   },
 });
 
-
 const App = () => (
   <ApolloProvider client={client}>
   <BrowserRouter>
