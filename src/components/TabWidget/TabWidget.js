@@ -62,6 +62,11 @@ query($podiatrist: ID!){
       sensor_3_left_position
       sensor_4_left_position
       sensor_5_left_position
+      sensor_1_anomaly_state
+      sensor_2_anomaly_state
+      sensor_3_anomaly_state
+      sensor_4_anomaly_state
+      sensor_5_anomaly_state
     }
   }
 }
@@ -161,7 +166,7 @@ export default function TabWidget() {
     function getSensorsData(patientId)
     {
     };
-    function changeAnomaly(patientId, anomaly_state)
+    function changeAnomaly(patientId, anomaly_state, sensor_1_anomaly_state,sensor_2_anomaly_state,sensor_3_anomaly_state,sensor_4_anomaly_state,sensor_5_anomaly_state)
     {
       if (patientId==null){
         toggleModal()
@@ -171,7 +176,13 @@ export default function TabWidget() {
           updatePatient({
             variables: {
               patient: patientId,
-              change: {anomaly: anomaly_state}
+              change: {anomaly: anomaly_state,
+                sensor_1_anomaly_state : sensor_1_anomaly_state,
+                sensor_2_anomaly_state : sensor_2_anomaly_state,
+                sensor_3_anomaly_state : sensor_3_anomaly_state,
+                sensor_4_anomaly_state : sensor_4_anomaly_state,
+                sensor_5_anomaly_state : sensor_5_anomaly_state,
+              }
             }
           }).then(
           data => {
@@ -324,7 +335,7 @@ export default function TabWidget() {
 
               if(count_anomaly>=2)
               {
-                changeAnomaly(pacient.id, true);
+                changeAnomaly(pacient.id, true,sensor_1_anomaly,sensor_2_anomaly,sensor_3_anomaly,sensor_4_anomaly,sensor_5_anomaly);
                 console.log("ANOMALIE!");
                 let emailMessage = `Hello ${pacient.name} ${pacient.lastname}, your podiatrist ${info.name} ${info.lastname} that you last saw on ${pacient.lastMeetingDate? pacient.lastMeetingDate: "None"} think that you need to schedule a appointment with him. \n Have a good day, \n\n Feetback application.`;
                 sendMail(pacient.email, info.email, "Schedule a meeting soon!", emailMessage);
@@ -332,7 +343,7 @@ export default function TabWidget() {
               //In the other case, the user anomaly field is false
               else
               {
-                changeAnomaly(pacient.id, false);
+                changeAnomaly(pacient.id, false, sensor_1_anomaly,sensor_2_anomaly,sensor_3_anomaly,sensor_4_anomaly,sensor_5_anomaly);
                 console.log("PAS D'ANOMALIE!");
               }
             }
@@ -358,7 +369,7 @@ export default function TabWidget() {
 
       localStorage.removeItem("CURRENT_PATIENT");
       localStorage.setItem("CURRENT_PATIENT", JSON.stringify(pacient));
-      history.push("/admin/patientProfile", { patientId: pacient.id, podiatrist: "1", name: pacient.name, lastname: pacient.lastname, lastMeetingDate: pacient.lastMeetingDate, email: pacient.email, anomaly_threshold: pacient.anomaly_threshold})
+      history.push("/admin/patientProfile", { patientId: pacient.id, podiatrist: pacient.currentPodiatrist, name: pacient.name, lastname: pacient.lastname, lastMeetingDate: pacient.lastMeetingDate, email: pacient.email, anomaly_threshold: pacient.anomaly_threshold})
     };
     function PatientRecord(pacient)
     {

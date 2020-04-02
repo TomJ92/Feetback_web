@@ -20,7 +20,9 @@ import { useQuery, useMutation } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 import { useHistory } from 'react-router-dom';
 import { useState } from "react";
-import sendMail from "../../components/Mail.js"
+import sendMail from "../../components/Mail.js";
+import Anomaly_sensor from "components/Anomaly/Anomaly_sensor.js";
+
 
 
 // reactstrap components
@@ -52,10 +54,34 @@ mutation($patient: ID!, $change: UserUpdateInput!) {
 
 export default function PatientsProfile (props){
   var info = JSON.parse(localStorage.getItem("CURRENT_PATIENT"));
+  const history = useHistory();
   console.log(info);
   const [exampleModal, setExampleModal] = useState(false);
   const [updatePatient] = useMutation(UPDATE_PATIENT);
   var anomaly_threshold = parseInt(info.anomaly_threshold);
+
+  if(info.sensor_1_anomaly_state == null)
+  {
+    info.sensor_1_anomaly_state=false;
+  }
+  if(info.sensor_2_anomaly_state == null)
+  {
+    info.sensor_2_anomaly_state=false;
+  }
+  if(info.sensor_3_anomaly_state == null)
+  {
+    info.sensor_3_anomaly_state=false;
+  }
+  if(info.sensor_4_anomaly_state == null)
+  {
+    info.sensor_4_anomaly_state=false;
+  }
+  if(info.sensor_5_anomaly_state == null)
+  {
+    info.sensor_5_anomaly_state=false;
+  }
+
+
   console.log(info);
   var sensor_1_toggle,sensor_2_toggle,sensor_3_toggle,sensor_4_toggle,sensor_5_toggle = false;
   console.log(info);
@@ -440,6 +466,11 @@ function move_sensor_1(event) { // (1) start the process
 }
 };
 
+function onData()
+{
+history.push("/admin/patient", { pacient: info.id });
+}
+
 /*function move_sensor_1(event)
 {
   var e = window.event;
@@ -697,7 +728,24 @@ src={require("assets/img/theme/patient.png")}
 <h3>
 Anomaly
 </h3>
+<h4>
+Overall anomaly
+</h4>
 <Anomaly val={info.anomaly}></Anomaly>
+<h4>
+Anomaly per sensor
+</h4>
+<Anomaly_sensor val={info.sensor_1_anomaly_state} number="1"></Anomaly_sensor>
+<Anomaly_sensor val={info.sensor_2_anomaly_state} number="2"></Anomaly_sensor>
+<Anomaly_sensor val={info.sensor_3_anomaly_state} number="3"></Anomaly_sensor>
+<Anomaly_sensor val={info.sensor_4_anomaly_state} number="4"></Anomaly_sensor>
+<Anomaly_sensor val={info.sensor_5_anomaly_state} number="5"></Anomaly_sensor>
+<Button
+onClick={() => onData()}
+size ="xl"
+>
+Go to patient's record
+</Button>
 <hr className="my-4" />
 <p>
 <b>Email :</b> <a href="">{info.email}</a>
