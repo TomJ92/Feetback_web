@@ -8,3 +8,4 @@
 
 <p> Use npm install to install the npm dependencies </p>
 <p> Use npm start to run the application </p>
+<p> To login : manuel@edu.fr password : 12345 </p>
