@@ -24,48 +24,49 @@ import { Container, Row, Col, Nav, NavItem, NavLink } from "reactstrap";
 class Footer extends React.Component {
   render() {
     return (
+      //Define footer with link and row divison for layout during administration after login
       <footer className="footer">
-        <Row className="align-items-center justify-content-xl-between">
-          <Col xl="6">
-            <div className="copyright text-center text-xl-left text-muted">
-              © 2020{" "}
-              <a
-                className="font-weight-bold ml-1"
-                href="https://tomj92.github.io/Feetback/"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Feetback
-              </a>
-            </div>
-          </Col>
+      <Row className="align-items-center justify-content-xl-between">
+      <Col xl="6">
+      <div className="copyright text-center text-xl-left text-muted">
+      © 2020{" "}
+      <a
+      className="font-weight-bold ml-1"
+      href="https://tomj92.github.io/Feetback/"
+      rel="noopener noreferrer"
+      target="_blank"
+      >
+      Feetback
+      </a>
+      </div>
+      </Col>
 
-          <Col xl="6">
-            <Nav className="nav-footer justify-content-center justify-content-xl-end">
-              <NavItem>
-                <NavLink
-                  href="https://tomj92.github.io/Feetback/"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  Feetback
-                </NavLink>
-              </NavItem>
+      <Col xl="6">
+      <Nav className="nav-footer justify-content-center justify-content-xl-end">
+      <NavItem>
+      <NavLink
+      href="https://tomj92.github.io/Feetback/"
+      rel="noopener noreferrer"
+      target="_blank"
+      >
+      Feetback
+      </NavLink>
+      </NavItem>
 
-              <NavItem>
-                <NavLink
-                  href="https://www.ecoledassas.com/un-partenariat-innovant-en-matiere-orthopedique/"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  About Us
-                </NavLink>
-              </NavItem>
-            </Nav>
-          </Col>
-        </Row>
+      <NavItem>
+      <NavLink
+      href="https://www.ecoledassas.com/un-partenariat-innovant-en-matiere-orthopedique/"
+      rel="noopener noreferrer"
+      target="_blank"
+      >
+      About Us
+      </NavLink>
+      </NavItem>
+      </Nav>
+      </Col>
+      </Row>
       </footer>
-    );
+      );
   }
 }
 

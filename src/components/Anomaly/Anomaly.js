@@ -1,3 +1,4 @@
+// Import libraries
 import React, { Component } from 'react';
 // node.js library that concatenates classes (strings)
 import classnames from "classnames";
@@ -25,28 +26,32 @@ import {
   InputGroupAddon,
   InputGroupText
 } from "reactstrap";
-
+//New class
 class Anomaly extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
+    }
   }
-}
   render() {
+    // if the value transmitted to the component is false : anomaly = false
     if(this.props.val == false)
     {
+      //Indicate that there is no anomaly with a green label
       return(<div class="alert alert-success" role="alert">
-    <strong>No anomaly to report !</strong>
-    </div>);
+        <strong>No anomaly to report !</strong>
+        </div>);
     }
+    //Else
     else
     {
+      //Indicate a anomaly with a red label
       return(<div class="alert alert-danger" role="alert">
-    <strong>Anomaly detected !</strong></div>);
+        <strong>Anomaly detected !</strong></div>);
     }
-}
+  }
 }
 
 export default Anomaly;

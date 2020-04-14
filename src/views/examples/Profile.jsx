@@ -1,56 +1,56 @@
-/*!
+  /*!
 
-=========================================================
-* Argon Dashboard React - v1.0.0
-=========================================================
+  =========================================================
+  * Argon Dashboard React - v1.0.0
+  =========================================================
 
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
+  * Product Page: https://www.creative-tim.com/product/argon-dashboard-react
+  * Copyright 2019 Creative Tim (https://www.creative-tim.com)
+  * Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
 
-* Coded by Creative Tim
+  * Coded by Creative Tim
 
-=========================================================
+  =========================================================
 
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-*/
-import React from "react";
-import { useQuery, useMutation } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
-import { useHistory } from 'react-router-dom';
-import { useState } from "react";
-import * as validator from "validator";
+  */
+  import React from "react";
+  import { useQuery, useMutation } from "@apollo/react-hooks";
+  import { gql } from "apollo-boost";
+  import { useHistory } from 'react-router-dom';
+  import { useState } from "react";
+  import * as validator from "validator";
 
 
-// reactstrap components
-import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  FormGroup,
-  Form,
-  Input,
-  Container,
-  Row,
-  Col
-} from "reactstrap";
-// core components
-import UserHeader from "components/Headers/UserHeader.jsx";
-//QUERY TO UPDATE A PATIENT USER WITH IS ID AND THE FIELD TO CHANGE
-const UPDATE_PODIATRIST = gql`
-mutation($podiatrist: ID!, $change: UserUpdateInput!) {
-  updateUser(user: $podiatrist, change: $change) {
-    status
-    message
+  // reactstrap components
+  import {
+    Button,
+    Card,
+    CardHeader,
+    CardBody,
+    FormGroup,
+    Form,
+    Input,
+    Container,
+    Row,
+    Col
+  } from "reactstrap";
+  // core components
+  import UserHeader from "components/Headers/UserHeader.jsx";
+  //QUERY TO UPDATE A PATIENT USER WITH IS ID AND THE FIELD TO CHANGE
+  const UPDATE_PODIATRIST = gql`
+  mutation($podiatrist: ID!, $change: UserUpdateInput!) {
+    updateUser(user: $podiatrist, change: $change) {
+      status
+      message
+    }
   }
-}
-`;
+  `;
 
-export default function Profile(props)
-{
-  const history = useHistory();
+  export default function Profile(props)
+  {
+    const history = useHistory();
   //Get the current user podiatrist
   let info = JSON.parse(localStorage.getItem("CURRENT_USER"));
   console.log(info);
@@ -76,59 +76,59 @@ export default function Profile(props)
   }
   //If click Change Email
   function changeEmail(podiatristID){
-    //if podiatrist ID is null
-    if (info.id !==null || podiatristID==null){
-      toggleModal()
-    }
-    if(email.length > 0 && validator.isEmail(email))
-    {
-    //update podiatrist's email
-    try {
-      updatePodiatrist({
-        variables: {
-          podiatrist: podiatristID,
-          change: {email: email}
-        }
-      }).then(
-      data => {
-        if (
-          data == undefined ||
-          data.data == undefined ||
-          data.data.updateUser == undefined ||
-          !data.data.updateUser.status
-          ) {
-          console.log("email");
-        console.log(email);
-        console.log("podiatristID");
-        console.log(podiatristID);
-        console.log("data");
-        console.log(data);
-        console.log("data.data");
-        console.log(data.data);
-        console.log("data.data.updateUser");
-        console.log(data.data.updateUser);
-        console.log("data.data.updateUser.message");
-        console.log(data.data.updateUser.message);
-
-
-      } else {
-            //remove current user and add it again with modified informations
-            console.log("donde");
-            info.email = email;
-            console.log(info);
-            localStorage.removeItem("CURRENT_USER");
-            localStorage.setItem("CURRENT_USER", JSON.stringify(info));
-            window.location.reload();
-          }
-        },
-        error => {
-          console.log("error ", error);
-        }
-        );
-    } catch (error) {
-      console.log(error.message);
-    }
+  //if podiatrist ID is null
+  if (info.id !==null || podiatristID==null){
+    toggleModal()
   }
+  if(email.length > 0 && validator.isEmail(email))
+  {
+  //update podiatrist's email
+  try {
+    updatePodiatrist({
+      variables: {
+        podiatrist: podiatristID,
+        change: {email: email}
+      }
+    }).then(
+    data => {
+      if (
+        data == undefined ||
+        data.data == undefined ||
+        data.data.updateUser == undefined ||
+        !data.data.updateUser.status
+        ) {
+        console.log("email");
+      console.log(email);
+      console.log("podiatristID");
+      console.log(podiatristID);
+      console.log("data");
+      console.log(data);
+      console.log("data.data");
+      console.log(data.data);
+      console.log("data.data.updateUser");
+      console.log(data.data.updateUser);
+      console.log("data.data.updateUser.message");
+      console.log(data.data.updateUser.message);
+
+
+    } else {
+  //remove current user and add it again with modified informations
+  console.log("donde");
+  info.email = email;
+  console.log(info);
+  localStorage.removeItem("CURRENT_USER");
+  localStorage.setItem("CURRENT_USER", JSON.stringify(info));
+  window.location.reload();
+}
+},
+error => {
+  console.log("error ", error);
+}
+);
+  } catch (error) {
+    console.log(error.message);
+  }
+}
 };
 function changeName(podiatristID){
   if (info.id !==null || podiatristID==null){
@@ -136,201 +136,212 @@ function changeName(podiatristID){
   }
   if(name.length > 0){
     try {
-      updatePodiatrist({
-        variables: {
-          podiatrist: podiatristID,
-          change: {name: name}
-        }
-      }).then(
-      data => {
-        if (
-          data == undefined ||
-          data.data == undefined ||
-          data.data.updateUser == undefined ||
-          !data.data.updateUser.status
-          ) {
-          console.log("name");
-        console.log(name);
-        console.log("podiatristID");
-        console.log(podiatristID);
-        console.log("data");
-        console.log(data);
-        console.log("data.data");
-        console.log(data.data);
-        console.log("data.data.updateUser");
-        console.log(data.data.updateUser);
-        console.log("data.data.updateUser.message");
-        console.log(data.data.updateUser.message);
+  //change name of the podiatrist
+  updatePodiatrist({
+    variables: {
+      podiatrist: podiatristID,
+      change: {name: name}
+    }
+  }).then(
+  data => {
+    if (
+      data == undefined ||
+      data.data == undefined ||
+      data.data.updateUser == undefined ||
+      !data.data.updateUser.status
+      ) {
+      console.log("name");
+    console.log(name);
+    console.log("podiatristID");
+    console.log(podiatristID);
+    console.log("data");
+    console.log(data);
+    console.log("data.data");
+    console.log(data.data);
+    console.log("data.data.updateUser");
+    console.log(data.data.updateUser);
+    console.log("data.data.updateUser.message");
+    console.log(data.data.updateUser.message);
 
 
-      } else {
-        console.log("donde");
-        info.name = name;
-        console.log(info);
-        localStorage.removeItem("CURRENT_USER");
-        localStorage.setItem("CURRENT_USER", JSON.stringify(info));
-        window.location.reload();
-      }
-    },
-    error => {
-      console.log("error ", error);
-    }
-    );
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
+  } else {
+    console.log("donde");
+    info.name = name;
+    console.log(info);
+
+  //reload with new information
+  localStorage.removeItem("CURRENT_USER");
+  localStorage.setItem("CURRENT_USER", JSON.stringify(info));
+  window.location.reload();
+}
+},
+error => {
+  console.log("error ", error);
+}
+);
+} catch (error) {
+  console.log(error.message);
+}
+}
 };
-function changeLastName(podiatristID){
-  if (info.id !==null || podiatristID==null){
-    toggleModal()
-  }
-  if(lastname.length > 0){
-    try {
-      updatePodiatrist({
-        variables: {
-          podiatrist: podiatristID,
-          change: {lastname: lastname}
-        }
-      }).then(
-      data => {
-        if (
-          data == undefined ||
-          data.data == undefined ||
-          data.data.updateUser == undefined ||
-          !data.data.updateUser.status
-          ) {
-          console.log("lastname");
-        console.log(lastname);
-        console.log("podiatristID");
-        console.log(podiatristID);
-        console.log("data");
-        console.log(data);
-        console.log("data.data");
-        console.log(data.data);
-        console.log("data.data.updateUser");
-        console.log(data.data.updateUser);
-        console.log("data.data.updateUser.message");
-        console.log(data.data.updateUser.message);
+  //change family name of the podiatrist
+  function changeLastName(podiatristID){
+    if (info.id !==null || podiatristID==null){
+      toggleModal()
+    }
+    if(lastname.length > 0){
+      try {
+        updatePodiatrist({
+          variables: {
+            podiatrist: podiatristID,
+            change: {lastname: lastname}
+          }
+        }).then(
+        data => {
+          if (
+            data == undefined ||
+            data.data == undefined ||
+            data.data.updateUser == undefined ||
+            !data.data.updateUser.status
+            ) {
+            console.log("lastname");
+          console.log(lastname);
+          console.log("podiatristID");
+          console.log(podiatristID);
+          console.log("data");
+          console.log(data);
+          console.log("data.data");
+          console.log(data.data);
+          console.log("data.data.updateUser");
+          console.log(data.data.updateUser);
+          console.log("data.data.updateUser.message");
+          console.log(data.data.updateUser.message);
 
 
-      } else {
-        console.log("donde");
-        info.lastname = lastname;
-        console.log(info);
-        localStorage.removeItem("CURRENT_USER");
-        localStorage.setItem("CURRENT_USER", JSON.stringify(info));
-        window.location.reload();
+        } else {
+          console.log("donde");
+          info.lastname = lastname;
+          console.log(info);
+  //Reload with new information
+  localStorage.removeItem("CURRENT_USER");
+  localStorage.setItem("CURRENT_USER", JSON.stringify(info));
+  window.location.reload();
+}
+},
+error => {
+  console.log("error ", error);
+}
+);
+      } catch (error) {
+        console.log(error.message);
       }
-    },
-    error => {
-      console.log("error ", error);
     }
-    );
-    } catch (error) {
-      console.log(error.message);
+  };
+  //change password of the podiatrist
+  function changePassword(podiatristID){
+    if (info.id !==null || podiatristID==null){
+      toggleModal()
     }
-  }
-};
-function changePassword(podiatristID){
-  if (info.id !==null || podiatristID==null){
-    toggleModal()
-  }
-  if(password.length > 0 && password.length< 8 && password == confirmpassword){
+    if(password.length > 0 && password.length< 8 && password == confirmpassword){
 
-    try {
-      updatePodiatrist({
-        variables: {
-          podiatrist: podiatristID,
-          change: {password: password}
-        }
-      }).then(
-      data => {
-        if (
-          data == undefined ||
-          data.data == undefined ||
-          data.data.updateUser == undefined ||
-          !data.data.updateUser.status
-          ) {
-          console.log("password");
-        console.log(password);
-        console.log("podiatristID");
-        console.log(podiatristID);
-        console.log("data");
-        console.log(data);
-        console.log("data.data");
-        console.log(data.data);
-        console.log("data.data.updateUser");
-        console.log(data.data.updateUser);
-        console.log("data.data.updateUser.message");
-        console.log(data.data.updateUser.message);
+      try {
+        updatePodiatrist({
+          variables: {
+            podiatrist: podiatristID,
+            change: {password: password}
+          }
+        }).then(
+        data => {
+          if (
+            data == undefined ||
+            data.data == undefined ||
+            data.data.updateUser == undefined ||
+            !data.data.updateUser.status
+            ) {
+            console.log("password");
+          console.log(password);
+          console.log("podiatristID");
+          console.log(podiatristID);
+          console.log("data");
+          console.log(data);
+          console.log("data.data");
+          console.log(data.data);
+          console.log("data.data.updateUser");
+          console.log(data.data.updateUser);
+          console.log("data.data.updateUser.message");
+          console.log(data.data.updateUser.message);
 
 
-      } else {
-        console.log("donde");
-        window.location.reload();
+        } else {
+          console.log("donde");
+          window.location.reload();
+  //reload the page
+}
+},
+error => {
+  console.log("error ", error);
+}
+);
       }
-    },
-    error => {
-      console.log("error ", error);
+      catch (error) {
+        console.log(error.message);
+      }
     }
-    );
-    }
-    catch (error) {
-      console.log(error.message);
-    }
-  }
+  };
+
+  const enabled_lastname = lastname.length > 0;
+
+
+  ///change the value according to the user input on the field
+
+  function handleEmailChange(evt){
+    email=evt.target.value;
+    console.log("Email change");
+  /*enabled_email = email.length > 0 && validator.isEmail(email);
+  console.log(enabled_email);
+  var e = document.getElementById("email_button");
+  console.log(e);
+  e.removeAttribute("disabled");
+  console.log(e);
+  e.setAttribute('disabled',enabled_email);
+  console.log(e);
+  */
 };
 
-const enabled_lastname = lastname.length > 0;
+function handlePasswordChange(evt){
+  password=evt.target.value;
+  console.log("Password change");
+  //enabled_password = password.length > 0 && password.length< 8 && password == confirmpassword;
+  //console.log(enabled_password);
+};
 
-function handleEmailChange(evt){
-  email=evt.target.value;
-  console.log("Email change");
-    /*enabled_email = email.length > 0 && validator.isEmail(email);
-    console.log(enabled_email);
-    var e = document.getElementById("email_button");
-    console.log(e);
-    e.removeAttribute("disabled");
-    console.log(e);
-    e.setAttribute('disabled',enabled_email);
-    console.log(e);
-    */
-  };
-  
-  function handlePasswordChange(evt){
-    password=evt.target.value;
-    console.log("Password change");
-    //enabled_password = password.length > 0 && password.length< 8 && password == confirmpassword;
-    //console.log(enabled_password);
-  };
+function handleFirstNameChange(evt){
+  name= evt.target.value;
+  console.log("First name change");
+  //enabled_name = name.length > 0;
+  //console.log(enabled_name);
+};
 
-  function handleFirstNameChange(evt){
-    name= evt.target.value;
-    console.log("First name change");
-    //enabled_name = name.length > 0;
-    //console.log(enabled_name);
-  };
-  
-  function handleLastNameChange(evt){
-    lastname=evt.target.value;
-    console.log("Last name change");
-    //enabled_lastname = lastname.length > 0;
-    //console.log(enabled_lastname)
-  };
+function handleLastNameChange(evt){
+  lastname=evt.target.value;
+  console.log("Last name change");
+  //enabled_lastname = lastname.length > 0;
+  //console.log(enabled_lastname)
+};
 
-  function handleConfirmPasswordChange(evt){
-    confirmpassword = evt.target.value;
-    console.log("Confirm password change");
-    //enabled_password = password.length > 0 && password.length< 8 && password == confirmpassword;
-    //console.log(enabled_password);
-  };
+function handleConfirmPasswordChange(evt){
+  confirmpassword = evt.target.value;
+  console.log("Confirm password change");
+  //enabled_password = password.length > 0 && password.length< 8 && password == confirmpassword;
+  //console.log(enabled_password);
+};
 
 
-  function handleSubmit(){
-    const { email, name, lastname, password, confirmpassword } = this.state;
-    //console.log("Submmit change");
-  };
+function handleSubmit(){
+  const { email, name, lastname, password, confirmpassword } = this.state;
+  //console.log("Submmit change");
+};
+  //display
   return (
     <>
     <UserHeader />
@@ -405,118 +416,118 @@ function handleEmailChange(evt){
   color="primary"
   href="#pablo"
   onClick={() => changeEmail(info.id)}
-                        //disabled = {!enabled_email}
-                        size="sm">
-                        Change email
-                        </Button>
-                        <Row>
-                        <Col lg="6">
-                        <FormGroup>
-                        <label
-                        className="form-control-label"
-                        htmlFor="input-first-name"
-                        >
-                        First name
-                        </label>
-                        <Input
-                        className="form-control-alternative"
-                        id="input-first-name"
-                        defaultValue ={info.name}
-                        type="text"
-                        onChange={handleFirstNameChange}
-                        />
-                        </FormGroup>
-                        <Button 
-                        id="name_button"
-                        color="primary"
-                        href="#pablo"
-                        onClick={() => changeName(info.id)}
-                        //disabled={!enabled_name}
-                        size="sm">
-                        Change name
-                        </Button>
-                        </Col>
-                        <Col lg="6">
-                        <FormGroup>
-                        <label
-                        className="form-control-label"
-                        htmlFor="input-last-name"
-                        >
-                        Last name
-                        </label>
-                        <Input
-                        className="form-control-alternative"
-                        id="input-last-name"
-                        defaultValue={info.lastname}
-                        type="text"  
-                        onChange={handleLastNameChange}    
-                        />
-                        </FormGroup>
-                        <Button 
-                        id="lastname_button"
-                        color="primary"
-                        href="#pablo"
-                        onClick={() => changeLastName(info.id)}
-                        //disabled={!enabled_lastname}
-                        size="sm">
-                        Change last name
-                        </Button>
-                        </Col>
-                        </Row>
+              //disabled = {!enabled_email}
+              size="sm">
+              Change email
+              </Button>
+              <Row>
+              <Col lg="6">
+              <FormGroup>
+              <label
+              className="form-control-label"
+              htmlFor="input-first-name"
+              >
+              First name
+              </label>
+              <Input
+              className="form-control-alternative"
+              id="input-first-name"
+              defaultValue ={info.name}
+              type="text"
+              onChange={handleFirstNameChange}
+              />
+              </FormGroup>
+              <Button 
+              id="name_button"
+              color="primary"
+              href="#pablo"
+              onClick={() => changeName(info.id)}
+              //disabled={!enabled_name}
+              size="sm">
+              Change name
+              </Button>
+              </Col>
+              <Col lg="6">
+              <FormGroup>
+              <label
+              className="form-control-label"
+              htmlFor="input-last-name"
+              >
+              Last name
+              </label>
+              <Input
+              className="form-control-alternative"
+              id="input-last-name"
+              defaultValue={info.lastname}
+              type="text"  
+              onChange={handleLastNameChange}    
+              />
+              </FormGroup>
+              <Button 
+              id="lastname_button"
+              color="primary"
+              href="#pablo"
+              onClick={() => changeLastName(info.id)}
+              //disabled={!enabled_lastname}
+              size="sm">
+              Change last name
+              </Button>
+              </Col>
+              </Row>
 
-                        <Row>
-                        <Col lg="6">
-                        <FormGroup>
-                        <label
-                        className="form-control-label"
-                        htmlFor="input-first-name"
-                        >
-                        Password
-                        </label>
-                        <Input
-                        className="form-control-alternative"
-                        id="input-first-name"
-                        defaultValue={info.password}
-                        type="password"
-                        onChange={handlePasswordChange}
-                        />
-                        </FormGroup>
-                        <Button 
-                        id="password_button"
-                        color="primary"
-                        href="#pablo"
-                        onClick={() => changePassword(info.id)}
-                        //disabled={!enabled_password}
-                        size="sm">
-                        Change password
-                        </Button>
-                        </Col>
-                        <Col lg="6">
-                        <FormGroup>
-                        <label
-                        className="form-control-label"
-                        htmlFor="input-last-name"
-                        >
-                        Confirm Password
-                        </label>
-                        <Input
-                        className="form-control-alternative"
-                        id="input-last-name"
-                        defaultValue={info.password}
-                        type="password"
-                        onChange={handleConfirmPasswordChange}
-                        />
-                        </FormGroup> 
-                        </Col>
+              <Row>
+              <Col lg="6">
+              <FormGroup>
+              <label
+              className="form-control-label"
+              htmlFor="input-first-name"
+              >
+              Password
+              </label>
+              <Input
+              className="form-control-alternative"
+              id="input-first-name"
+              defaultValue={info.password}
+              type="password"
+              onChange={handlePasswordChange}
+              />
+              </FormGroup>
+              <Button 
+              id="password_button"
+              color="primary"
+              href="#pablo"
+              onClick={() => changePassword(info.id)}
+              //disabled={!enabled_password}
+              size="sm">
+              Change password
+              </Button>
+              </Col>
+              <Col lg="6">
+              <FormGroup>
+              <label
+              className="form-control-label"
+              htmlFor="input-last-name"
+              >
+              Confirm Password
+              </label>
+              <Input
+              className="form-control-alternative"
+              id="input-last-name"
+              defaultValue={info.password}
+              type="password"
+              onChange={handleConfirmPasswordChange}
+              />
+              </FormGroup> 
+              </Col>
 
-                        </Row>
-                        </div>
-                        </Form>
-                        </CardBody>
-                        </Card>
-                        </Col>
-                        </Row>
-                        </Container>
-                        </>
-                        );
-                      }
+              </Row>
+              </div>
+              </Form>
+              </CardBody>
+              </Card>
+              </Col>
+              </Row>
+              </Container>
+              </>
+              );
+            }
