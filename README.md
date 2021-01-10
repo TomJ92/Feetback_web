@@ -2,7 +2,7 @@
 
 <h2> Description </h2>
 
-<p>A web applicaiton to provide a podiatrit a interface to see patient's data overtime and to schedule appointment </p>
+<p>A web application to provide an interface for podiatrist to see patient's data overtime and to schedule appointment </p>
 
 <h2> Guide </h2>
 
